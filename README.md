@@ -10,7 +10,9 @@ docker-compose ps
 ```
 ### Running Front React app 
 ```
-cd 
+cd frontend-src
+npm i
+npm start
 ```
 ## More
 - Local swagger url : http://localhost:8081/swagger-ui/index.html
