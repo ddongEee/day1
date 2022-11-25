@@ -1,5 +1,6 @@
 package io.github.ddongeee.day1;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class ClientsController {
     }
 
     @GetMapping
+    @ApiOperation(value = "list clients", notes = "findAll clients")
     public List<Client> getClients() {
         return clientRepository.findAll();
     }
@@ -48,5 +50,4 @@ public class ClientsController {
         clientRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
-
 }
