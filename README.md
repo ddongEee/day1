@@ -8,7 +8,10 @@
 docker-compose up -d
 docker-compose ps
 ```
-
+### Running Front React app 
+```
+cd 
+```
 ## More
 - Local swagger url : http://localhost:8081/swagger-ui/index.html
 
