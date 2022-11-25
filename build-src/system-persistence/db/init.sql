@@ -1,0 +1,2 @@
+ALTER SYSTEM SET max_connections = 500;
+CREATE DATABASE day1;

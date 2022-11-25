@@ -1,0 +1,12 @@
+# BaseImage Ref > https://hub.docker.com/r/flyway/flyway/tags?page=1&name=alpine
+ARG BASE_REGISTRY="docker.io/flyway"
+ARG BASE_IMG_NAME="flyway"
+ARG BASE_IMG_VERS="8.5.9-alpine"
+FROM ${BASE_REGISTRY}/${BASE_IMG_NAME}:${BASE_IMG_VERS}
+
+ARG MIG_SCOPE="sql/ddl-schema"
+ADD ./sql/ddl-schema /flyway/sql/ddl-schema
+ADD ./${MIG_SCOPE} /flyway/${MIG_SCOPE}
+
+ENTRYPOINT ["flyway"]
+CMD ["-?"]
