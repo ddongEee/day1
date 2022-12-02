@@ -1,2 +1,2 @@
-insert into builder.client (id, name, email)
-values (1, 'Haksung Kim', 'crayon@helloworld.com');
+insert into builder.client (name, email)
+values ('Haksung Kim', 'crayon@helloworld.com');

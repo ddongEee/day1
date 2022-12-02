@@ -51,6 +51,9 @@ spring:
     database: "postgresql"
     hibernate:
       ddl-auto: validate # create disabled: schema has been managed by flyway on docker-compose
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         default_schema: "builder"

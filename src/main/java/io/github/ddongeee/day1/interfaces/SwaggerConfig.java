@@ -1,4 +1,4 @@
-package io.github.ddongeee.day1;
+package io.github.ddongeee.day1.interfaces;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

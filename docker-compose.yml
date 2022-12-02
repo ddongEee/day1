@@ -38,6 +38,7 @@ services:
 
   mig-db-dataset:
     depends_on:
+      - db
       - mig-db-schema
     image: day1_mig:dev-dataset
     container_name: mig-db-dataset

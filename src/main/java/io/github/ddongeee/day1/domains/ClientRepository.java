@@ -1,4 +1,4 @@
-package io.github.ddongeee.day1;
+package io.github.ddongeee.day1.domains;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

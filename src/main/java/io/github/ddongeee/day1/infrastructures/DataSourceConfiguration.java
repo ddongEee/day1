@@ -1,4 +1,4 @@
-package io.github.ddongeee.day1;
+package io.github.ddongeee.day1.infrastructures;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
