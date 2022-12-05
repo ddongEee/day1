@@ -1,0 +1,22 @@
+{
+  "include": [
+    "step_definitions/**/*.ts"
+  ],
+  "exclude": [
+    ".yarn",
+    "step_definitions/**/*.steps.js"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es5",
+    /* Enable all strict type-checking options. */
+    "strict": true,
+    "noImplicitAny": false,
+    // for pactum.spec() - currently there is no typed bridge.
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    /* Experimental Options */
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
