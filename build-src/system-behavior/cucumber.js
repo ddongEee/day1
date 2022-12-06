@@ -4,7 +4,9 @@ const commonOptions = [
   'features/**/*.feature',
   // Load 'TypeScript module' & 'Step Definitions'
   '--require-module ts-node/register',
+  "--require cucumber.setup.js",
   '--require step_definitions/**/*.ts',
+  '--require utils/**/*.ts',
   // Disable publishing option
   '--publish-quiet',
 ];

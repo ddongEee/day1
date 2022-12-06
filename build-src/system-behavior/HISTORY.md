@@ -57,6 +57,10 @@ touch .nvmrc # edit the file
 yarn add --dev @yarnpkg/sdks
 yarn dlx @yarnpkg/sdks vscode
 
+# Yarn Contraints plugin
+yarn plugin import constraints
+# yarn constraints --fix
+
 # Typescript
 yarn add --dev typescript tsconfig-paths ts-node
 yarn add --dev @types/node
@@ -76,8 +80,26 @@ yarn add --dev multiple-cucumber-html-reporter
 
 # etc.
 yarn add dotenv
-yarn add --dev prettier lint-staged tslint tslint-config-prettier
 yarn add --dev loglevel
+```
+
+```bash
+yarn --init
+# ✔ How would you like to use ESLint? · style
+# ✔ What type of modules does your project use? · esm
+# ✔ Which framework does your project use? · none
+# ✔ Does your project use TypeScript? · Yes
+# ✔ Where does your code run? · browser, node
+# ✔ How would you like to define a style for your project? · guide
+# ✔ Which style guide do you want to follow? · standard-with-typescript
+# ✔ What format do you want your config file to be in? · JSON
+
+# Lint
+yarn add --dev lint-staged husky
+yarn add --dev eslint
+yarn add --dev prettier eslint-plugin-prettier eslint-config-prettier
+yarn add --dev install-peerdeps
+install-peerdeps --dev eslint-config-standard-with-typescript
 ```
 
 - Set [`tsconfig.json`](tsconfig.json) for typescript
