@@ -7,7 +7,7 @@
     "test:report": "cucumber-js --tags \"not @WIP\" -p report",
     "report": "yarn run report:remove && yarn run report:create",
     "report:remove": "rm -rf outputs/report",
-    "report:create": "node cucumber.report.js",
+    "report:create": "ts-node cucumber.report.ts --module commonjs",
     "lint": "lint-staged"
   },
   "lint-staged": {

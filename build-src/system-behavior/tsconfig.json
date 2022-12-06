@@ -1,7 +1,7 @@
 {
   "include": [
     "step_definitions/**/*.ts"
-  ],
+, "step_definitions/_utils/EnvUtils.ts"  ],
   "exclude": [
     ".yarn",
     "step_definitions/**/*.steps.js"
@@ -9,6 +9,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
+    "module": "commonjs",
     /* Enable all strict type-checking options. */
     "strict": true,
     "noImplicitAny": false,

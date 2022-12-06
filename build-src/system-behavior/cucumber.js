@@ -1,4 +1,4 @@
-/* Cucumber Profiles */
+// Cucumber Profiles - Ref. https://github.com/cucumber/cucumber-js/blob/main/docs/profiles.md#profiles
 const commonOptions = [
   // Set all features
   'features/**/*.feature',

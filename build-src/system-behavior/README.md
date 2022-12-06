@@ -6,7 +6,7 @@ The simple BDD suite for day1
 
 ```bash
 # Prepare dependencies with Yarn Berry
-yarn install --immutable --immutable-cache --check-cache
+yarn install --immutable # --immutable-cache --check-cache
 
 # Execute Cucumber
 yarn run test
