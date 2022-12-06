@@ -1,0 +1,23 @@
+## ======================================
+## Embedded Tomcat Server Properties
+## * Ref. https://docs.spring.io/spring-boot/docs/2.6.4/reference/htmlsingle/#application-properties.server
+## ======================================
+server:
+  port: 8082
+  servlet:
+    context-path: "/"
+    encoding:
+      charset: "UTF-8"
+      enabled: true
+      force: true
+  tomcat:
+    accept-count: 10
+    max-connections: 100
+    threads:
+      max: 10
+      min-spare: 10
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

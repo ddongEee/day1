@@ -31,14 +31,6 @@ TestRestTemplate restTemplate
 3. test method 만들기
 
 
-# 개념정리
-- test container : https://www.testcontainers.org/
-    - 설정 정보
-# 고민..
-- xxxResponse 객체에서는 @Value 쓰기가 까탈스럽다.. api integration test 에서 restTemplate.getForObject 로 type 정의시.. convert 해야 되서.. NoArgs, @data씀..
-
-
-
 <!-- 도움  -->
 ```bash
 # docker-compose
@@ -53,6 +45,20 @@ docker-compose -f /Users/kmhak/Projects/personal/day1/docker-compose.yml logs --
 curl -X GET "http://localhost:8081/subscription-plans/users/1" -H "accept: */*"
 curl -X GET "http://localhost:8081/subscription-plans/users/999" -H "accept: */*"
 curl -X POST "http://localhost:8081/subscription-plans" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"code\": \"modelC\", \"userId\": \"999\"}"
+
+# circuit breaker test urls
+curl localhost:8082/mobile-plans/init-try-count && curl localhost:8081/mobile-plans/bulk/11/0
 ```
 
-
+# todo
+- feature flag 반영
+- [정리]
+    - https://www.baeldung.com/java-web-thread-pool-config 
+        - https://kapentaz.github.io/spring/Spring-ThreadPoolTaskExecutor-%EC%84%A4%EC%A0%95/#
+    - test container : https://www.testcontainers.org/
+- [고민]
+    - xxxResponse 객체에서는 @Value 쓰기가 까탈스럽다.. api integration test 에서 restTemplate.getForObject 로 type 정의시.. convert 해야 되서.. NoArgs, @data씀..
+    - 테스트 어느수준까지 해야 하는가? integration, ui test.. 등등.
+- [질문]
+    - KW 에서 api integration test 시에 @LocalServerPort 사용 이유?
+    - flyway.migrate() 사용이유. 퍼포먼스.

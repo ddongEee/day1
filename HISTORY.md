@@ -1,5 +1,7 @@
 ## Done
 
+- spring actuator
+
 ### Local dev DB(postgresql) 환경 구축
 #### why
 - 서로다른 local pc 및 환경과 무관하게 동일한 test db 환경 필요

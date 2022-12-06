@@ -53,13 +53,28 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.0'
     testImplementation 'org.spockframework:spock-core:2.2-M3-groovy-3.0'
     testImplementation 'org.spockframework:spock-spring:2.2-M3-groovy-3.0'
-    testImplementation 'com.google.code.gson:gson:2.10' // 테스트 용으로만..
     // About testContainer
     testImplementation 'org.testcontainers:postgresql:1.17.6'
     testImplementation "org.testcontainers:testcontainers:1.17.6"
     testImplementation "org.testcontainers:spock:1.17.6"
     testImplementation "org.flywaydb:flyway-core"
 }
+
+project('other-simple-microservice') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'io.micrometer:micrometer-registry-prometheus:1.10.2'
+        implementation 'com.google.guava:guava:31.1-jre'
+        compileOnly 'org.projectlombok:lombok:1.18.24'
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    }
+}
+
 test {
     useJUnitPlatform()
 }

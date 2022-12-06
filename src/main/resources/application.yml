@@ -90,3 +90,7 @@ management:
   metrics:
     tags:
       application: day1-builder
+
+microservice:
+  day2:
+    url: "http://localhost:8082"
