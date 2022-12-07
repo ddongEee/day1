@@ -48,9 +48,12 @@ curl -X POST "http://localhost:8081/subscription-plans" -H "accept: */*" -H "Con
 
 # Actuator 
 # circuit breaker test urls
-curl localhost:8082/mobile-plans/init-try-count && curl localhost:8081/mobile-plans/bulk/110/0
+curl localhost:8082/mobile-plans/init-try-count && curl localhost:8081/mobile-plans/bulk/1000/0
 
 curl localhost:8082/actuator/prometheus
+
+curl localhost:8082/test/common
+curl localhost:8082/test/parallel
 ```
 
 # todo

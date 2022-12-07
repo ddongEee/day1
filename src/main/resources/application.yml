@@ -31,6 +31,8 @@ server:
 ## * Ref. maximum-pool-size > https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing#connections--core_count--2--effective_spindle_count
 ## ======================================
 spring:
+  application:
+    name: day1app
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/day1
@@ -89,7 +91,7 @@ management:
           include: "readinessState,db"
   metrics:
     tags:
-      application: day1-builder
+      application: ${spring.application.name}
 
 microservice:
   day2:
