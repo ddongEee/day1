@@ -19,8 +19,8 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
-      - "${GRAFANA_VOLUME:-./build-src/system-monitoring/grafana}:/etc/grafana/provisioning"
-    restart: always
+      - "${GRAFANA_VOLUME:-./build-src/system-monitoring/grafana/datasources}:/etc/grafana/provisioning/datasources"
+    restart: unless-stopped
 
   db:
     image: day1_db:dev

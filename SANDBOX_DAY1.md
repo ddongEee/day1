@@ -75,3 +75,6 @@ curl localhost:8082/test/parallel
     - flyway.migrate() 사용이유. 퍼포먼스.
 - [반영]
   - interface parameter validation
+  - grafana 설정 정보 persistence
+  - day1app 도 grafana 반영
+  - feature flag 반영!
