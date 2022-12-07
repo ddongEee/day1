@@ -56,16 +56,22 @@ curl localhost:8082/test/common
 curl localhost:8082/test/parallel
 ```
 
-# todo
+# TODO
 - feature flag 반영
 - [정리]
     - https://www.baeldung.com/java-web-thread-pool-config 
         - https://kapentaz.github.io/spring/Spring-ThreadPoolTaskExecutor-%EC%84%A4%EC%A0%95/#
     - test container : https://www.testcontainers.org/
     - docker container connect btw machine localhost : https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach
+    - docker 관련
+      - db, volume mount 관련,, 추가 알아보기
+    - springBootTest 에서 applicationContext 캐싱 관련 : https://suhwan.dev/2019/03/27/spring-test-context-management-and-caching/ 
 - [고민]
     - xxxResponse 객체에서는 @Value 쓰기가 까탈스럽다.. api integration test 에서 restTemplate.getForObject 로 type 정의시.. convert 해야 되서.. NoArgs, @data씀..
     - 테스트 어느수준까지 해야 하는가? integration, ui test.. 등등.
+    - flyway 버저닝 어떻게 할지.. ddl 과 dml 분리해야 할지?
 - [질문]
     - KW 에서 api integration test 시에 @LocalServerPort 사용 이유?
     - flyway.migrate() 사용이유. 퍼포먼스.
+- [반영]
+  - interface parameter validation

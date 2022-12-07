@@ -1,6 +1,8 @@
 ## Done
-
+- prometheus & grafana
 - spring actuator
+
+---
 
 ### Local dev DB(postgresql) 환경 구축
 #### why
