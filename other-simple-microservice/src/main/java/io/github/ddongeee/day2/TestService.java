@@ -27,7 +27,7 @@ public class TestService {
         } else {
             try {
                 log.warn("[{}]too many request!!", receivedCount.incrementAndGet());
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

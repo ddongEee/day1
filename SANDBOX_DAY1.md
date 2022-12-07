@@ -46,8 +46,11 @@ curl -X GET "http://localhost:8081/subscription-plans/users/1" -H "accept: */*"
 curl -X GET "http://localhost:8081/subscription-plans/users/999" -H "accept: */*"
 curl -X POST "http://localhost:8081/subscription-plans" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"code\": \"modelC\", \"userId\": \"999\"}"
 
+# Actuator 
 # circuit breaker test urls
-curl localhost:8082/mobile-plans/init-try-count && curl localhost:8081/mobile-plans/bulk/11/0
+curl localhost:8082/mobile-plans/init-try-count && curl localhost:8081/mobile-plans/bulk/110/0
+
+curl localhost:8082/actuator/prometheus
 ```
 
 # todo
@@ -56,6 +59,7 @@ curl localhost:8082/mobile-plans/init-try-count && curl localhost:8081/mobile-pl
     - https://www.baeldung.com/java-web-thread-pool-config 
         - https://kapentaz.github.io/spring/Spring-ThreadPoolTaskExecutor-%EC%84%A4%EC%A0%95/#
     - test container : https://www.testcontainers.org/
+    - docker container connect btw machine localhost : https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach
 - [고민]
     - xxxResponse 객체에서는 @Value 쓰기가 까탈스럽다.. api integration test 에서 restTemplate.getForObject 로 type 정의시.. convert 해야 되서.. NoArgs, @data씀..
     - 테스트 어느수준까지 해야 하는가? integration, ui test.. 등등.

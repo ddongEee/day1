@@ -1,5 +1,27 @@
 version: '3.8'
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    volumes:
+      - "${PROMETHEUS_VOLUME:-./build-src/system-monitoring/prometheus}:/etc/prometheus"
+  grafana:
+    depends_on:
+      - prometheus
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - "${GRAFANA_VOLUME:-./build-src/system-monitoring/grafana}:/etc/grafana/provisioning"
+    restart: always
+
   db:
     image: day1_db:dev
     container_name: db
@@ -57,7 +79,7 @@ services:
       -outOfOrder=true
       -ignorePendingMigrations=true
       -ignoreIgnoredMigrations=true
-      repair info migrate info    
+      repair info migrate info
 
 volumes:
   db-data:

@@ -1,0 +1,13 @@
+global:
+  scrape_interval: "1s"
+  evaluation_interval: "1s"
+scrape_configs:
+  - job_name: "springboot"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets:
+          - "host.docker.internal:8082" # 해당 설정의 경우 app 이 container 로 띄워진다면 localhost 로 변경 필요
+  - job_name: "prometheus"
+    static_configs:
+      - targets:
+          - "localhost:9090"
