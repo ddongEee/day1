@@ -1,0 +1,13 @@
+{
+  "name": "<%= process.env.MB_DAY1_IMPO_NAME %>",
+  "protocol": "<%= process.env.MB_DASHBOARD_PRTL %>",
+  "port": <%= process.env.MB_DAY1_IMPO_PORT %>,
+  "recordRequests": false,
+  "stubs": [
+    <%- include("./mobile-plans/get.contract.ejs") %>,
+    <%- include("./subscription-plans/post.contract.ejs") %>,
+    <%- include("./subscription-plans/users/1/get.contract.ejs") %>,
+    <%- include("./subscription-plans/users/1/put.contract.ejs") %>,
+    <%- include("./unsubscription-plans/post.contract.ejs") %>
+  ]
+}

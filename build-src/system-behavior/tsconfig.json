@@ -1,0 +1,37 @@
+{
+  "include": [
+    "step_definitions/**/*.ts",
+    "utils/**/*.ts",
+    "cucumber.report.ts"
+  ],
+  "exclude": [
+    ".sonarlint",
+    ".vscode",
+    ".yarn",
+    "node_modules",
+    "features",
+    "fixtures",
+    "outputs"
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "types": ["node"],
+    // Enable permenent path
+    "baseUrl": ".",
+    "paths": {
+      "#step_definitions/*": ["step_definitions/*"],
+      "#utils/*": ["utils/*"]
+    },
+    // Enable all strict type-checking options.
+    "strict": true,
+    "noImplicitAny": false,
+    // for pactum.spec() - currently there is no typed bridge.
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    // Experimental Options
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}

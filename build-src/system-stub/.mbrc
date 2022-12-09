@@ -1,0 +1,18 @@
+{
+  "allowInjection": true,
+  "configfile": ".mbconf.ejs",
+  "pidfile": "temp/.mb.pid",
+  "log": {
+    "level": "warn",
+    "transports": {
+      "console": {
+        "colorize": true,
+        "format": "%timestamp [%level] %message"
+      },
+      "file": {
+        "path": "temp/logs/mb.log",
+        "format": "%timestamp [%level] %message"
+      }
+    }
+  }
+}

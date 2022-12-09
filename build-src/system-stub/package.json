@@ -1,0 +1,35 @@
+{
+  "name": "system-stub",
+  "packageManager": "yarn@3.3.0",
+  "scripts": {
+    "start": "yarn run msg:port && yarn run service-up",
+    "msg:port": "echo \"[Mountebank] Try to start on '${MB_DASHBOARD_PORT:-2525}' port...\"",
+    "service-up": "mb restart --rcfile .mbrc --port ${MB_DASHBOARD_PORT:-2525}",
+    "capture": "TYPE=mark && yarn run save",
+    "stop": "TYPE=auto && yarn run save && mb stop --rcfile .mbrc --port ${MB_DASHBOARD_PORT:-2525}",
+    "save": "yarn run export && yarn run backup",
+    "export": "mb save --rcfile .mbrc --port ${MB_DASHBOARD_PORT:-2525} --savefile temp/${TYPE}-record.ejs && cat temp/${TYPE}-record.ejs | jq",
+    "backup": "mkdir -p temp/baks && cp temp/${TYPE}-record.ejs temp/baks/${TYPE}-record.$(date '+%y%m%d-%H%M%S').ejs",
+    "reload:mark": "yarn run service-up --configfile temp/mark-record.ejs",
+    "reload:auto": "yarn run service-up --configfile temp/auto-record.ejs",
+    "replay": "mb replay --rcfile .mbrc --port ${MB_DASHBOARD_PORT:-2525}",
+    "stub": "echo \"[Mountebank] Stubbing enabled. (recording disable)\" && yarn run start --allowInjection false --configfile .mbconf.stub.ejs"
+  },
+  "devDependencies": {
+    "@yarnpkg/sdks": "^3.0.0-rc.32",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "latest",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.0"
+  },
+  "dependencies": {
+    "ejs": "3.1.8",
+    "mountebank": "2.8.1"
+  }
+}

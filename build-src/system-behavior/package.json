@@ -1,0 +1,62 @@
+{
+  "name": "system-behavior",
+  "packageManager": "yarn@3.3.0",
+  "scripts": {
+    "e2e:console": "cucumber-js -p console",
+    "e2e:report": "cucumber-js -p report",
+    "test": "yarn run e2e:console --tags \"not @WIP and not @Example\"",
+    "ci": "yarn run e2e:report --tags \"not @WIP and not @Example\" && yarn run report",
+    "report": "yarn run report:remove && yarn run report:create",
+    "report:remove": "rm -rf outputs/report",
+    "report:create": "ts-node cucumber.report.ts --module commonjs",
+    "lint": "lint-staged"
+  },
+  "lint-staged": {
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.ts?": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^8.9.0",
+    "@cucumber/pretty-formatter": "^1.0.0",
+    "@types/chai": "^4.3.4",
+    "@types/cucumber": "^7.0.0",
+    "@types/node": "^18.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.45.1",
+    "@yarnpkg/sdks": "^3.0.0-rc.32",
+    "chai": "^4.3.7",
+    "cucumber-tsflow": "^4.0.0-rc.7",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard-with-typescript": "latest",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "loglevel": "^1.8.1",
+    "multiple-cucumber-html-reporter": "^3.0.1",
+    "pactum": "^3.3.1",
+    "prettier": "^2.8.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.1",
+    "typescript": "*"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  }
+}

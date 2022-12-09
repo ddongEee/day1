@@ -1,22 +1,37 @@
 # day1
+
 **Index**
-- [Quickstart](#quickstart)
+
+- [day1](#day1)
+  - [Quickstart](#quickstart)
+    - [Running Front React app](#running-front-react-app)
+  - [More](#more)
+  - [Reference](#reference)
 
 ## Quickstart
+
 ```bash
+# volume (only once)
+docker volume create --name=db-data
+
 # db + mig-db-schema + mig-db-dataset
 docker-compose up -d
 docker-compose ps
 ```
-### Running Front React app 
+
+### Running Front React app
+
 ```
 cd frontend-src
 npm i
 npm start
 ```
+
 ## More
-- Local swagger url : http://localhost:8081/swagger-ui/index.html
+
+- Local swagger url : <http://localhost:8081/swagger-ui/index.html>
 - Recommended VM options
+
 ```bash
 -Xms4g
 -Xmx4g
@@ -34,4 +49,5 @@ npm start
 ```
 
 ## Reference
-- https://www.baeldung.com/spring-boot-react-crud
+
+- <https://www.baeldung.com/spring-boot-react-crud>

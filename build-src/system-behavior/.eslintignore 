@@ -1,0 +1,8 @@
+.sonarlint
+.vscode
+.yarn
+node_modules
+features
+fixtures
+outputs
+cucumber.report.ts

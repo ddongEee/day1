@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "arcanis.vscode-zipfs",
+    "dbaeumer.vscode-eslint", // Ref. https://code.visualstudio.com/api/advanced-topics/tslint-eslint-migration#tslint-removal
+  ]
+}
