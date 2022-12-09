@@ -1,0 +1,29 @@
+{
+  "predicates": [{
+    "equals": {
+      "method": "GET",
+      "path": "/subscription-plans/users/1"
+    }
+  }],
+  "responses": [{
+    "is": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      "body": {
+        "subscribedPlanCode": "empty"
+      }
+    }
+  },{
+    "is": {
+      "statusCode": 200,
+      "headers": {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      "body": {
+        "subscribedPlanCode": "modelA"
+      }
+    }
+  }]
+}
