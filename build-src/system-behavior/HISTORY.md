@@ -52,7 +52,50 @@ touch .nvmrc # edit the file
 
 ### Set dependencies
 
+```diff
+eslint --init
+
+> You can also run this command directly using 'npm init @eslint/config'.
+
+- ? How would you like to use ESLint?
++ > To check syntax, find problems, and enforce code style
+
+- ? What type of modules does your project use?
++ > JavaScript modules (import/export)
+
+- ? Which framework does your project use?
++ > None of these
+
+- ? Does your project use TypeScript?
++ > Yes
+
+- ? Where does your code run?
++ > browser
++ > Node
+
+- ? How would you like to define a style for your project?
++ > Use a popular style guide
+
+- ? Which style guide do you want to follow?
++ > standard-with-typescript: https://github.com/standard/eslint-config-standard-with-typescript
+
+- ? What format do you want your config file to be in?
++ > JSON
+
+- ? Would you like to install them now?
++ > Yes
+
+- ? Which package manager do you want to use?
++ > yarn
+```
+
 ```bash
+# Lint
+yarn add --dev lint-staged husky
+yarn add --dev prettier eslint-plugin-prettier eslint-config-prettier
+yarn add --dev install-peerdeps
+install-peerdeps --dev eslint-config-standard-with-typescript
+
 # Yarn berry with VScode
 yarn add --dev @yarnpkg/sdks
 yarn dlx @yarnpkg/sdks vscode
@@ -81,25 +124,6 @@ yarn add --dev multiple-cucumber-html-reporter
 # etc.
 yarn add dotenv
 yarn add --dev loglevel
-```
-
-```bash
-yarn --init
-# ✔ How would you like to use ESLint? · style
-# ✔ What type of modules does your project use? · esm
-# ✔ Which framework does your project use? · none
-# ✔ Does your project use TypeScript? · Yes
-# ✔ Where does your code run? · browser, node
-# ✔ How would you like to define a style for your project? · guide
-# ✔ Which style guide do you want to follow? · standard-with-typescript
-# ✔ What format do you want your config file to be in? · JSON
-
-# Lint
-yarn add --dev lint-staged husky
-yarn add --dev eslint
-yarn add --dev prettier eslint-plugin-prettier eslint-config-prettier
-yarn add --dev install-peerdeps
-install-peerdeps --dev eslint-config-standard-with-typescript
 ```
 
 - Set [`tsconfig.json`](tsconfig.json) for typescript

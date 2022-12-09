@@ -4,16 +4,12 @@ import { expect } from "chai";
 import * as log from "loglevel";
 
 import { Navigator } from "#utils/for-rest-api";
-import { EnvUtils, ErrorUtils, FileUtils } from "#utils/for-common";
+import { EnvUtils, ErrorUtils, FileUtils, makePrefix } from "#utils/for-common";
 import { filterQuotations } from "#utils/for-test-data/DataStringUtils";
 import {
   convertToArray,
   convertToJson,
 } from "#utils/for-test-data/DataTableUtils";
-
-export function makePrefix(tag: string = "no-tagged"): string {
-  return `      🚀 [${tag}] `;
-}
 
 @binding()
 export default class DefaultNavigatorSteps {
@@ -96,12 +92,14 @@ export default class DefaultNavigatorSteps {
   @then(/^반환된 본문은 비어있다.$/)
   public thenResponseBodyIsEmpty() {
     const responseBody = this.navigator.getResponseBody();
-    expect(JSON.stringify(responseBody)).is.equal("{}");
+    log.debug(`${this.prefix}| navigator.responseBody:\n\t\t| ${JSON.stringify(responseBody)}`);
+    expect(responseBody).is.equal("");
   }
 
   @then(/^반환된 본문은 다음과 같다.$/)
   public thenResponseBodyDataMustBeLike(dataTable: DataTable) {
     const responseBody = this.navigator.getResponseBody();
+    log.debug(`${this.prefix}| navigator.responseBody:\n\t\t| ${JSON.stringify(responseBody)}`);
     const expectedResBodyData = convertToJson(dataTable, "ExpectedResBodyData");
     const expectedResBodyJson = convertToArray(expectedResBodyData);
     expect(JSON.stringify({ ...responseBody }))
@@ -115,9 +113,9 @@ export default class DefaultNavigatorSteps {
       throw ErrorUtils.invalidInput("expectedLength", "Positive Integer");
     }
 
-    // Expect Singular (json)
     const responseBody = this.navigator.getResponseBody();
     const stringifyBody = JSON.stringify(responseBody);
+    log.debug(`${this.prefix}| navigator.responseBody:\n\t\t| ${stringifyBody}`);
     if (expectedLength === 1) {
       this.expectJson(stringifyBody);
       return;

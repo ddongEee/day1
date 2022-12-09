@@ -6,8 +6,8 @@ function invalidInput(target: string, type: string): Error {
   return new Error(`Invalid '${target}' has been inserted. (Must be ${type})`);
 }
 
-function invalidState(target: string, resolvingGuide: string): Error {
-  return new Error(`'The ${target} state is undefined. (${resolvingGuide})`);
+function invalidState(target: string, targetState: any, resolvingGuide: string): Error {
+  return new Error(`'The ${target} state is ${targetState}. (${resolvingGuide})`);
 }
 
 const ErrorUtils = {

@@ -2,4 +2,8 @@ import EnvUtils from "./EnvUtils";
 import ErrorUtils from "./ErrorUtils";
 import FileUtils from "./FileUtils";
 
-export { EnvUtils, ErrorUtils, FileUtils };
+function makePrefix(tag: string = "no-tagged"): string {
+  return `      🚀 [${tag}] `;
+}
+
+export { EnvUtils, ErrorUtils, FileUtils, makePrefix };

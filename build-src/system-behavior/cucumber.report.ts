@@ -15,8 +15,8 @@ const reportOption = {
   displayDuration: true,
   durationInMS: true,
   // HTML
-  pageTitle: `BDD Report - ${EnvUtils.readSystemName()}`,
-  reportName: `${EnvUtils.readSystemName()} / Automated BDD-Test Result`,
+  pageTitle: `REST-BDD Report :: ${EnvUtils.readSystemName()}`,
+  reportName: `${EnvUtils.readSystemName()} / Automated REST-BDD Report`,
   // etc
   customData: {
     title: EnvUtils.readSystemName(),

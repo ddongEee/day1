@@ -30,6 +30,7 @@
     "strictNullChecks": true,
     "esModuleInterop": true,
     // Experimental Options
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   }

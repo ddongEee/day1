@@ -35,7 +35,7 @@ function readSystemRuntime(): string {
 function readSystemEndpoint(): string {
   const protocol = process.env.SYSTEM_PROTOCOL ?? "http";
   const host = process.env.SYSTEM_HOST ?? "127.0.0.1";
-  const port = process.env.SYSTEM_PORT ?? "8080";
+  const port = process.env.SYSTEM_PORT ?? "8081";
   return `${protocol}://${host}:${port}`;
 }
 

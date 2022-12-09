@@ -226,7 +226,12 @@ export default class Navigator implements RestApiTestSpecs {
   }
 
   public getResponseBody(): object {
-    return this._isCalled ? this._callApiSpec._response.json : {};
+    if (this._isCalled === false) {
+      throw ErrorUtils.invalidState("_isCalled", this._isCalled, "The api does not called yet! Review flow with each scenarios.")
+    }
+    // const resBody = this._callApiSpec._response.json;
+    // return resBody === "" ? null : resBody;
+    return this._callApiSpec._response.json;
   }
 
   resetCallConfig() {
