@@ -7,7 +7,7 @@ class AccountDepositSteps {
 
   @given(/시작 잔액이 (\d*)원인 은행 계좌가 주어질 때/, "Example")
   public givenAnAccountWithStartingBalance(amount: number) {
-    this.accountBalance = amount;
+    this.accountBalance = Number(amount);
   }
 
   @when(/(\d*)원을 입금한다면/, "Example")
@@ -17,7 +17,7 @@ class AccountDepositSteps {
 
   @then(/해당 계좌의 잔액은 (\d*)원이 되어야 한다/, "Example")
   public accountBalanceShouldEqual(expectedAmount: number) {
-    assert.equal(this.accountBalance, expectedAmount);
+    assert.equal(expectedAmount, this.accountBalance);
   }
 }
 

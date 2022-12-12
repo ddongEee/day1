@@ -4,6 +4,8 @@
   "scripts": {
     "e2e:console": "cucumber-js -p console",
     "e2e:report": "cucumber-js -p report",
+    "sample": "yarn run e2e:console --tags \"not @WIP and not @subscription\"",
+    "sample:report": "yarn run e2e:report --tags \"not @WIP and not @subscription\"",
     "test": "yarn run e2e:console --tags \"not @WIP and not @Example\"",
     "ci": "yarn run e2e:report --tags \"not @WIP and not @Example\" && yarn run report",
     "report": "yarn run report:remove && yarn run report:create",
