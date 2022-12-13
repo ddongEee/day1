@@ -18,7 +18,13 @@ public class PlanSubscriptionController {
     @GetMapping("/subscription-plans/users/{userId}")
     public SubscribedPlanResponse getSubscribedPlan(@PathVariable String userId) {
         SubscribedPlanVo subscribedPlanVo = planSubscriber.querySubscribedPlan(userId);
-        return mapper.toResponse(subscribedPlanVo);
+        if ( subscribedPlanVo == null) {
+            SubscribedPlanResponse subscribedPlanResponse = new SubscribedPlanResponse();
+            subscribedPlanResponse.setSubscribedPlanCode("empty");
+            return subscribedPlanResponse;
+        }
+        SubscribedPlanResponse subscribedPlanResponse = mapper.toResponse(subscribedPlanVo);
+        return subscribedPlanResponse;
     }
 
     @PostMapping("/subscription-plans")
