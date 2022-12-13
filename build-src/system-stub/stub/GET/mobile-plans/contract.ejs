@@ -1,0 +1,38 @@
+{
+  "predicates": [
+    {
+      "caseSensitive": true,
+      "deepEquals": {
+        "method": "GET"
+      }
+    },
+    {
+      "caseSensitive": true,
+      "deepEquals": {
+        "path": "/mobile-plans"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "is": {
+        "statusCode": 200,
+        "body": [
+          {
+            "name": "요금제A",
+            "code": "modelA"
+          },
+          {
+            "name": "요금제B",
+            "code": "modelB"
+          },
+          {
+            "name": "요금제C",
+            "code": "modelC"
+          }
+        ],
+        "_mode": "text"
+      }
+    }
+  ]
+}

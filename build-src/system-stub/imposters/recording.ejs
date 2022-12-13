@@ -9,7 +9,10 @@
         "to": "<%= process.env.MB_DAY1_APP_ENDPOINT %>",
         "mode": "proxyAlways",
         "predicateGenerators": [{
-          "matches": { "query": true },
+          "matches": {
+            "method": true,
+            "path": true
+          },
           "caseSensitive": true
         }]
       }

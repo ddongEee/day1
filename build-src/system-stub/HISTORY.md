@@ -15,28 +15,7 @@
    nvm --version
    ```
 
-2. Install node environment
-
-   ```bash
-   # Setup node manager
-   nvm install --lts 18
-
-   # Check
-   nvm current
-   nvm list --no-alias
-   node --version
-
-   # Check
-   npm --version
-   yarn --version
-
-   # Setup package manger
-   npm install --global npm   # Maybe need to set tslint.json version. Please check the console
-   npm install --global yarn
-
-   ```
-
-3. Auto setting node environment from `.nvmrc`
+2. Auto setting node environment from `.nvmrc`
 
    ```bash
    # Open the shell control file
@@ -70,6 +49,70 @@
    ```
 
    Save and quit(`esc` + `:wq`), then reopen your terminal.
+
+3. Install node environment
+
+   ```bash
+   # Setup node manager
+   nvm install --lts 18
+
+   # Check
+   nvm current
+   nvm list --no-alias
+   node --version
+
+   # Setup package manger
+   npm install --global npm   # Maybe need to set tslint.json version. Please check the console
+   npm install --global yarn
+
+   # Check
+   npm --version
+   yarn --version
+   ```
+
+4. [JQ](https://stedolan.github.io/jq/): ike sed for JSON data.
+
+    ```bash
+    # Install JQ
+    # Mac OSX
+    brew install jq
+
+    # Linux
+    sudo wget \
+        https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 \
+        -o /usr/local/bin/jq \
+        && sudo chmod +x /usr/local/bin/jq
+
+    # Check
+    yq --version
+    ```
+
+5. [JMESPath](https://jmespath.org/):  a query language for JSON.
+
+    ```bash
+    # Install JMESPath CLI
+    # Mac OSX
+    brew install jmespath/jmespath/jp
+
+    # Linux
+    sudo wget \
+        https://github.com/jmespath/jp/releases/latest/download/jp-linux-amd64 \
+        -O /usr/local/bin/jp \
+        && sudo chmod +x /usr/local/bin/jp
+
+    # Check
+    jp --version
+    ```
+
+    - [**JMESPath Examples**](https://jmespath.org/examples.html)
+
+    - (Option) [JMESPath Terminal](https://github.com/jmespath/jmespath.terminal#getting-started) in [Docker Container](https://hub.docker.com/r/frew/jpterm)
+
+      ```bash
+      # Run on docker container
+      docker pull frew/jpterm
+      docker run -it --rm --user $(id -u) frew/jpterm
+      ```
 
 ## Project
 
