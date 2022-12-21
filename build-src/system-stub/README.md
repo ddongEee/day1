@@ -2,6 +2,13 @@
 
 The simple stubbing suite for day1
 
+- [system-stub](#system-stub)
+  - [Quick Start](#quick-start)
+  - [Structure](#structure)
+    - [Turn `ON` the `recording`](#turn-on-the-recording)
+    - [After record](#after-record)
+    - [Turn `ON` the `Stub`](#turn-on-the-stub)
+
 ## Quick Start
 
 ```bash
@@ -17,7 +24,9 @@ yarn install --check-cache # --immutable --immutable-cache
 > Cause of using mb(bin) in yarn command, could not shim dotenv.  
 > So, use clean ternimal that is not manually set other environment variables.
 
-### Turn `ON` the recording
+## Structure
+
+### Turn `ON` the `recording`
 
 > _Imposter as a Proxy with Recording HTTP Handshakes._  
 > _Check that communicate with the client and the server **through the imposter**._
@@ -75,7 +84,7 @@ sequenceDiagram
     imposter ->> imposter: 
     Note right of imposter: record request data
 
-    rect rgb(35, 50, 90)
+    rect rgb(70, 100, 180)
     Note over server: server:8081
     imposter ->> server: send request
     Note right of imposter: from imposter to client
@@ -126,7 +135,7 @@ export $(cat .env) && printenv | grep MB
 
 - check [`stub/`](./stub/) directory
 
-### Turn `ON` the Stub
+### Turn `ON` the `Stub`
 
 > _Imposter as a stub with Mocked HTTP Handshakes._  
 > _Check that there is **no communication with server**._

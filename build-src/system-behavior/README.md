@@ -48,7 +48,7 @@ sequenceDiagram
       features ->> cucumber.js: features/**/*.feature
       Note right of cucumber.js: read gerkin scenario
     
-    rect rgb(35, 50, 90)
+    rect rgb(70, 100, 180)
       *.ts file -->> cucumber.js: step_definitions/**/*.ts
       Note right of cucumber.js: gerkin syntax methods
       *.ts file -->> cucumber.js: utils/**/*.ts

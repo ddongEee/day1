@@ -3,10 +3,22 @@
 **Index**
 
 - [day1](#day1)
+  - [Overview](#overview)
+    - [Architecture](#architecture)
   - [Quickstart](#quickstart)
     - [Support systems](#support-systems)
     - [Running Front React app](#running-front-react-app)
   - [Reference](#reference)
+
+## Overview
+
+### Architecture
+
+- [Overview](README.TECH.md#overview)
+
+- [Independent Application **Functional Testing Stack**](README.TECH.md#independent-application-functional-testing-stack)
+
+- [Independent Application **Development Stack**](README.TECH.md#independent-application-development-stack)
 
 ## Quickstart
 
@@ -23,7 +35,6 @@ docker-compose run mig-db-dataset
 - check [`docker-compose.yml`](./docker-compose.yml)
 
 ```bash
-# FIXME
 # Build all
 ./gradlew clean build
 
