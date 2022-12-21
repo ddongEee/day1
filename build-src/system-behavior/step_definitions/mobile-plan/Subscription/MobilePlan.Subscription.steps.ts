@@ -28,7 +28,7 @@ class MobilePalnSubscriptionSteps {
       `${this.prefix} - SubscriptionPlanData: ${JSON.stringify(subscriptionPlan)}`
     );
     for (const key in subscriptionPlan) {
-      this.root.navigator.appendHeader(key, subscriptionPlan[`${key}`]);
+      this.root.navigator.appendBody(key, subscriptionPlan[`${key}`]);
     }
     log.debug(
       `${this.prefix} - navigator.reqBody : ${JSON.stringify(

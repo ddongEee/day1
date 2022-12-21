@@ -1,9 +1,0 @@
-{
-  "protocol": "<%= process.env.MB_DASHBOARD_PRTL %>",
-  "port": <%= process.env.MB_DAY1_IMPO_PORT %>,
-  "name": "<%= process.env.MB_DAY1_IMPO_NAME %>",
-  "recordRequests": true,
-  "stubs": [
-    <%- include("./chunked/features/mobile-plan/subscription.feature.stub.ejs") %>
-  ]
-}

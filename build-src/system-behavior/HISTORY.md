@@ -15,27 +15,7 @@
    nvm --version
    ```
 
-2. Install node environment
-
-   ```bash
-   # Setup node manager
-   nvm install --lts 18
-
-   # Check
-   nvm current
-   nvm list --no-alias
-   node --version
-
-   # Check
-   npm --version
-   yarn --version
-
-   # Setup package manger
-   npm install --global npm   # Maybe need to set tslint.json version. Please check the console
-   npm install --global yarn
-   ```
-
-3. Auto setting node environment from `.nvmrc`
+2. Auto setting node environment from `.nvmrc`
 
    ```bash
    # Open the shell control file
@@ -69,6 +49,26 @@
    ```
 
    Save and quit(`esc` + `:wq`), then reopen your terminal.
+
+3. Install node environment
+
+   ```bash
+   # Setup node manager
+   nvm install --lts 18
+
+   # Check
+   nvm current
+   nvm list --no-alias
+   node --version
+
+   # Setup package manger
+   npm install --global npm   # Maybe need to set tslint.json version. Please check the console
+   npm install --global yarn
+
+   # Check
+   npm --version
+   yarn --version
+   ```
 
 ## Project
 

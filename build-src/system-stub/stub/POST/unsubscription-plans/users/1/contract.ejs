@@ -1,0 +1,36 @@
+{
+  "predicates": [
+    {
+      "caseSensitive": true,
+      "deepEquals": {
+        "method": "GET"
+      }
+    },
+    {
+      "caseSensitive": true,
+      "deepEquals": {
+        "path": "/subscription-plans/users/1"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "is": {
+        "statusCode": 200,
+        "body": {
+          "subscribedPlanCode": "empty"
+        },
+        "_mode": "text"
+      }
+    },
+    {
+      "is": {
+        "statusCode": 200,
+        "body": {
+          "subscribedPlanCode": "modelA"
+        },
+        "_mode": "text"
+      }
+    }
+  ]
+}

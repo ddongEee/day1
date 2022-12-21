@@ -38,7 +38,7 @@
     만약 시스템의 '/subscription-plans' 경로의 API를 'POST' 방식으로
     그리고 아래 정보로 요금제 신청 정보를 구성해서
       | Key    | Type | Value  | Mean   |
-      | userid | NUM  | 1      | 사용자 1 |
+      | userId | STR  | 1      | 사용자 1 |
       | code   | STR  | modelA | 요금제A |
     그리고 호출한다면,
     그러면 반환된 HTTP 상태코드는 '200'이다.
@@ -60,7 +60,7 @@
     만약 시스템의 '/subscription-plans' 경로의 API를 'PUT' 방식으로
     그리고 아래 정보로 요금제 신청 정보를 구성해서
       | Key    | Type | Value  | Memo    |
-      | userid | NUM  | 1      | 1번 사용자 |
+      | userId | STR  | 1      | 1번 사용자 |
       | code   | STR  | modelB | 요금제B   |
     그리고 호출한다면,
     그러면 반환된 HTTP 상태코드는 '200'이다.
@@ -70,10 +70,10 @@
   @subscribed-user @pass
   시나리오: 요금제에 가입된 서비스 이용자는 가입된 요금제를 해지할 수 있다
     먼저 '1'번 사용자가 '요금제B'에 가입되어 있을 때,
-    만약 시스템의 '/unsubscription-plans' 경로의 API를 'POST' 방식으로
+    만약 시스템의 '/unsubscription-plans/users/1' 경로의 API를 'POST' 방식으로
     그리고 아래 정보로 요금제 신청 정보를 구성해서
       | Key    | Type | Value  | Memo    |
-      | userid | NUM  | 1      | 1번 사용자 |
+      | userId | STR  | 1      | 1번 사용자 |
     그리고 호출한다면,
     그러면 반환된 HTTP 상태코드는 '200'이다.
     그리고 반환된 본문은 비어있다.
