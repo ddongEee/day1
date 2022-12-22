@@ -84,12 +84,12 @@ flowchart TB
       TSFLOW[[ ts-flow ]]:::Support
       Steps[( Step\nDefinitions )]:::Support
       Pactum[[ pactum ]]:::Core
+      TSNODE[[ ts-node ]]:::Support
     end
     subgraph JavaScript
       direction TB
       Cucumber[[ Cucumber.js ]]:::Process
       Feature[( Feature\nFiles )]:::Support
-      TSNODE[[ ts-node ]]:::Support
     end
   end
   CONSOLE{{ Console }}
@@ -106,7 +106,7 @@ flowchart TB
   Cucumber <-.->|REST API Call \n by pactum| Endpoint
   Cucumber -->|output| CONSOLE & RESULT
   RESULT -.->|source| REPORT
-  Yarn ====>|yarn report| REPORTER ==> REPORT
+  Yarn =====>|yarn report| REPORTER ==> REPORT
 ```
 
 - **Read more**:
