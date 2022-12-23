@@ -4,6 +4,10 @@
   - [Overview](#overview)
   - [Independent Application Functional Testing Stack](#independent-application-functional-testing-stack)
   - [Independent Application Development Stack](#independent-application-development-stack)
+  - [Technical Stack Keyword](#technical-stack-keyword)
+    - [Language](#language)
+    - [Package Manager](#package-manager)
+    - [Library or Framework](#library-or-framework)
 
 ## Overview
 
@@ -101,7 +105,7 @@ flowchart TB
   Yarn ==>|yarn test| Cucumber
   Feature -.-o|import scenario| Cucumber
   Pactum -.- Steps
-  Steps -.- TSFLOW --o|import steps| TSNODE --o|compile| Cucumber
+  Steps -.- TSFLOW --o|import steps| TSNODE ---o|compile| Cucumber
 
   Cucumber <-.->|REST API Call \n by pactum| Endpoint
   Cucumber -->|output| CONSOLE & RESULT
@@ -122,26 +126,21 @@ flowchart TB
 ```mermaid
 %%{ init: { "fontFamily": "Noto Sans KR, sans-serif" } }%%
 flowchart TB %% Top to Bottom
-  %% Style
-  classDef Role color:#050505,fill:#fad7ac,stroke:#be7a26,stroke-width:3px
-  classDef Support color:#ffffff,fill:#065767,stroke:#012e37,stroke-width:3px
-  classDef Core color:#ffffff,fill:#69ab3e,stroke:#3f761c,stroke-width:3px
-  classDef Process color:#ffffff,fill:#42920e,stroke:#286003,stroke-width:3px
-  classDef OCI color:#ffffff,fill:#2e72b8,stroke:#17395c,stroke-width:3px
-  classDef OCIProcess color:#ffffff,fill:#1063b7,stroke:#07325e,stroke-width:3px
-  classDef Target color:#ffffff,fill:#941717,stroke:#5e0707,stroke-width:3px
-
   %% Group
   subgraph Local Network
     direction TB
-    WFDEV( Developer \n who focus \n the Workflow ):::Role
+    Compose[[ docker-compose.yaml ]]:::Support
     subgraph Containerization
       direction TB
+      subgraph Team Collaboration
+        WFTEST( Tester \n who focus \n the AppTesting ):::Role
+        WFFLOW( Engineer \n who focus \n the Workflow ):::Role
+        WFLOGIC( Developer \n who focus \n the AppLogic ):::Role
+      end
       Containerize[[ Dockerfile ]]:::Support
       ENV( Environment Vairables ):::Support
       OCI(( Container \n Image )):::OCI
       CRI[[ Container Runtime ]]:::OCIProcess
-      APPDEV( Developer \n who focus \n the AppLogic ):::Role
       subgraph Java
         direction TB
         Config( Configuration ):::Support
@@ -155,28 +154,75 @@ flowchart TB %% Top to Bottom
           Spock([ Spock Framework ]):::Core
           end
       end
+      ContainerEndpoint{{ Containerized Service Endpoint }}:::Target
     end
-    Compose[[ docker-compose.yaml ]]:::Support
-    ContainerEndpoint{{ Containerized Service Endpoint }}:::Target
   end
   Workflow> CI & CD Workflow ]
 
-
   %% Link
-  WFDEV ---|Collaboration| APPDEV
-  Workflow o-.-o|Sustain| WFDEV
+  Workflow -.- Compose -.- Containerization
+  Workflow --o|Sustain| WFFLOW 
 
-  APPDEV --->|Understand business logic| Java
-  APPDEV --->|Understand \n virtualizaton| Containerize
+  WFLOGIC -->|Understand business logic| Java
+  WFLOGIC -->|Understand \n virtualizaton| Containerize
 
-  Gradle -.-o Spring & Spock
+  Gradle -.-> Spring & Spock
   Spock -.->|test-suite before bundling| Jar
   Config --> Spring
   Spring ==> Boot ==> Jar
   Jar -->|bootRun| BootProcess
-  Jar --> Containerize
-  BootProcess --o BootEndpoint
+  Jar ----> Containerize
+  BootProcess --> BootEndpoint
 
+  Containerize --> OCI -->|run| CRI
   ENV -->|inject| CRI
-  Containerize ---> OCI -->|run| CRI --o ContainerEndpoint
+  CRI --> ContainerEndpoint
+
+  WFTEST -.->|Bundled \nE2E Testing \n&\n Understand \n business logic| BootEndpoint
+  WFTEST ==>|Containerized\nE2E Testing \n&\n Understand \n business logic| ContainerEndpoint
+
+  %% Style
+  classDef Role color:#050505,fill:#fad7ac,stroke:#be7a26,stroke-width:3px
+  classDef Support color:#ffffff,fill:#065767,stroke:#012e37,stroke-width:3px
+  classDef Core color:#ffffff,fill:#69ab3e,stroke:#3f761c,stroke-width:3px
+  classDef Process color:#ffffff,fill:#42920e,stroke:#286003,stroke-width:3px
+  classDef OCI color:#ffffff,fill:#2e72b8,stroke:#17395c,stroke-width:3px
+  classDef OCIProcess color:#ffffff,fill:#1063b7,stroke:#07325e,stroke-width:3px
+  classDef Target color:#ffffff,fill:#941717,stroke:#5e0707,stroke-width:3px
 ```
+
+## Technical Stack Keyword
+
+- [Test pyramid](https://martinfowler.com/articles/practical-test-pyramid.html),
+  [Test Double](https://martinfowler.com/bliki/TestDouble.html)
+  by [Martin Fowler](https://martinfowler.com/)
+
+### Language
+
+- [JavaScript](https://developer.mozilla.org/ko/docs/Web/JavaScript) + [node.js](https://nodejs.org/en/docs/)
+
+- [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+
+- [Groovy](https://groovy-lang.org/documentation.html)
+
+### Package Manager
+
+- [Gradle](https://docs.gradle.org/current/userguide/what_is_gradle.html)
+
+- [npm](https://docs.npmjs.com/about-npm) or
+  [yarn](https://yarnpkg.com/getting-started) or [yarn berry](https://yarnpkg.com/getting-started/install#initializing-your-project)
+
+### Library or Framework
+
+- [Cucumber School](https://school.cucumber.io/collections) +
+  [Cucumber.js](https://cucumber.io/docs/installation/javascript/)
+
+  - [BDD overview for Business Analysts and Product Owners](https://school.cucumber.io/courses/bdd-overview-for-business-analysts-and-product-owners)
+
+  - [BDD with Cucumber (JavaScript)](https://school.cucumber.io/courses/bdd-with-cucumber-javascript)
+
+- [Pactum.js](https://pactumjs.github.io/)
+
+- [Spock Framework](https://spockframework.org/spock/docs/current/index.html)
+
+- [FlyWay](https://flywaydb.org/)
