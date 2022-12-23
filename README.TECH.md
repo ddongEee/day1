@@ -124,47 +124,20 @@ flowchart TB
 ## Independent Application Development Stack
 
 ```mermaid
-%%{ init: { "fontFamily": "Noto Sans KR, sans-serif" } }%%
+%%{
+  init: {
+    'fontFamily': 'Noto Sans KR, sans-serif',
+    'curve': 'stepAfter'
+  }
+}%%
 flowchart TB %% Top to Bottom
-  %% Group
-  subgraph Local Network
-    direction TB
-    Compose[[ docker-compose.yaml ]]:::Support
-    subgraph Containerization
-      direction TB
-      subgraph Team Collaboration
-        WFTEST( Tester \n who focus \n the AppTesting ):::Role
-        WFFLOW( Engineer \n who focus \n the Workflow ):::Role
-        WFLOGIC( Developer \n who focus \n the AppLogic ):::Role
-      end
-      Containerize[[ Dockerfile ]]:::Support
-      ENV( Environment Vairables ):::Support
-      OCI(( Container \n Image )):::OCI
-      CRI[[ Container Runtime ]]:::OCIProcess
-      subgraph Java
-        direction TB
-        Config( Configuration ):::Support
-        Spring([ Spring Framework ]):::Core
-        Boot{{ SpringBoot Application }}:::Core
-        Jar( Bundled Jar )
-        BootProcess[[ SpringBoot Process ]]:::Process
-        BootEndpoint{{ Bundled Service Endpoint }}
-          subgraph Groovy
-          Gradle[[ Gradle ]]:::Support
-          Spock([ Spock Framework ]):::Core
-          end
-      end
-      ContainerEndpoint{{ Containerized Service Endpoint }}:::Target
-    end
-  end
-  Workflow> CI & CD Workflow ]
-
   %% Link
-  Workflow -.- Compose -.- Containerization
-  Workflow --o|Sustain| WFFLOW 
+  Workflow o==o|Sustain| WFFLOW 
+  Workflow -.- Compose -.- TeamCollaboration
+  Compose --o Containerization
 
-  WFLOGIC -->|Understand business logic| Java
-  WFLOGIC -->|Understand \n virtualizaton| Containerize
+  WFLOGIC ==>|Understand business logic| Java
+  WFLOGIC ==>|Understand \n virtualizaton| Containerize
 
   Gradle -.-> Spring & Spock
   Spock -.->|test-suite before bundling| Jar
@@ -181,7 +154,42 @@ flowchart TB %% Top to Bottom
   WFTEST -.->|Bundled \nE2E Testing \n&\n Understand \n business logic| BootEndpoint
   WFTEST ==>|Containerized\nE2E Testing \n&\n Understand \n business logic| ContainerEndpoint
 
+  %% Group
+  Workflow> CI & CD Workflow ]
+  Compose[[ docker-compose.yaml ]]:::Support
+  subgraph Containerization
+    direction TB
+    subgraph TeamCollaboration
+      WFTEST( Tester \n who focus \n the AppTesting ):::Role
+      WFFLOW( Engineer \n who focus \n the Workflow ):::Role
+      WFLOGIC( Developer \n who focus \n the AppLogic ):::Role
+    end
+    Containerize[[ Dockerfile ]]:::Support
+    ENV( Environment Vairables ):::Support
+    OCI(( Container \n Image )):::OCI
+    CRI[[ Container Runtime ]]:::OCIProcess
+    subgraph Java
+      direction TB
+      Config( Configuration ):::Support
+      Spring([ Spring Framework ]):::Core
+      Boot{{ SpringBoot Application }}:::Core
+      Jar( Bundled Jar )
+      BootProcess[[ SpringBoot Process ]]:::Process
+      BootEndpoint{{ Bundled Service Endpoint }}
+        subgraph Groovy
+        Gradle[[ Gradle ]]:::Support
+        Spock([ Spock Framework ]):::Core
+        end
+    end
+    ContainerEndpoint{{ Containerized Service Endpoint }}:::Target
+  end
+
   %% Style
+  style Containerization stroke-width:5px
+  style TeamCollaboration stroke-width:3px,stroke-dasharray: 6 6 6
+  style Java stroke-width:5px
+  style Groovy stroke-width:5px
+
   classDef Role color:#050505,fill:#fad7ac,stroke:#be7a26,stroke-width:3px
   classDef Support color:#ffffff,fill:#065767,stroke:#012e37,stroke-width:3px
   classDef Core color:#ffffff,fill:#69ab3e,stroke:#3f761c,stroke-width:3px
