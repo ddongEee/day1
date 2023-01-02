@@ -5,7 +5,7 @@ on:
 
 jobs:
   unit-test:
-    runs-on: [ 'Linux', 'X64', 'HRA-control', 'dockered' ]
+    runs-on: [ 'Linux', 'X64', 'HRA-control', 'dockerd' ]
     steps:
       - name: my-step
         run: echo "Hello World!"
