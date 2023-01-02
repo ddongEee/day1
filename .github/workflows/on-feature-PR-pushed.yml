@@ -5,7 +5,7 @@ on:
 
 jobs:
   unit-test:
-    runs-on: [ 'Linux', 'X64', 'HRA-control', 'docker' ]
+    runs-on: [ 'Linux', 'X64', 'HRA-control', 'dockered' ]
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
