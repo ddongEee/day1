@@ -7,5 +7,12 @@ jobs:
   unit-test:
     runs-on: [ 'Linux', 'X64', 'HRA-control', 'dockerd' ]
     steps:
-      - name: my-step
-        run: echo "Hello World!"
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Test with Gradle
+        run: ./gradlew test
