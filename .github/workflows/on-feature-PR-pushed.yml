@@ -1,7 +1,8 @@
-name: on-main-pr-requested
+name: on-feature-pr-pushed
 on:
-  pull_request:
+  push:
     branches: [ 'main', 'haksung/*']
+
 jobs:
   unit-test:
     runs-on: [ 'Linux', 'X64', 'HRA-control', 'docker' ]
