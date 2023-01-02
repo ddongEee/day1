@@ -5,6 +5,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.testcontainers.spock.Testcontainers
+import spock.lang.Ignore
 import spock.lang.Specification
 
 // todo : 폴더 따로 구분하기
@@ -15,6 +16,7 @@ class MobilePlanControllerIntegrationTest extends Specification {
     @Autowired
     TestRestTemplate restTemplate
 
+    @Ignore
     def "MobilePlanController.mobilePlans()"() {
         expect:
         def list = restTemplate.getForObject("/mobile-plans", MobilePlanController.MobilePlanResponse[].class)

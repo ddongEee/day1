@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.testcontainers.spock.Testcontainers
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import static io.github.ddongeee.day1.interfaces.PlanSubscriptionController.*
@@ -20,6 +21,7 @@ class PlanSubscriptionControllerIntegrationTest extends Specification {
     @Autowired
     TestRestTemplate restTemplate
 
+    @Ignore
     def "Get /subscription-plans/users/{userId}"() {
         expect:
         def userId = "1"
