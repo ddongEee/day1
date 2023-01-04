@@ -1,3 +1,7 @@
+import java.io.File
+import java.io.FileInputStream
+import java.util.*
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.5.0' apply false
@@ -5,9 +9,25 @@ plugins {
     id 'groovy'
 }
 
+def Properties prop = new Properties()
+Reader reader = new FileReader(project.rootProject.file("gradle-ci.properties"))
+prop.load(reader)
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+apply plugin: 'groovy'
+
 group = 'io.github.ddongeee.day1'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+
+def appVersion = prop.getProperty("appVersion", "SNAPSHOT")
+version = appVersion
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 allprojects {
 	repositories {
@@ -16,23 +36,8 @@ allprojects {
 	}
 }
 
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'java'
-apply plugin: 'groovy'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-bootJar.enabled = false
-jar.enabled = true
-
-group = 'io.github.ddongeee.day1'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+bootJar.enabled = true
+jar.enabled = false
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'

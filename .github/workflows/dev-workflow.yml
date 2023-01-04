@@ -14,12 +14,11 @@ env:
   GRADLE_VERSION: "7.5"
   JAVA_VERSION: "11"
   YQ_VERSION: "v4.27.2"
-  # Runtime Versions of Containers
-  COMPOSE_VERSION: "v2.9.0"
-  BASE_ECR_IMAGE_NAME: day1-base-spring
-  BASE_ECR_IMAGE_VERS: "0.1.0"
+  # Application
+  APP_DAY1: day1
+  APP_DAY2: day2
   # GitOps: Integration target of 'git branches'
-  GITOPS_REPO_NAME: day1
+  GITOPS_REPO_NAME: day1-appchart
 
 jobs:
   build:
@@ -89,3 +88,25 @@ jobs:
         run: |
           echo "Generating the Wrapper files requires an installed version of the Gradle runtime on runner"
           chmod +x ./gradlew && ./gradlew wrapper
+
+      - name: 🚀 [BUILD] Build application package
+        run: ./gradlew clean build
+
+      - name: 🚀 [BUILD] Build application version check
+        id: app-vers
+        run: |
+          FIRST_GREPPED_APP_VERS=$(cat gradle-ci.properties | grep "appVersion" | tr -d ' ' | head -n 1)
+          TRIMMED_APP_VERS=$(echo ${FIRST_GREPPED_APP_VERS} | awk -F '=' '{print $2}')
+          echo "> '${FIRST_GREPPED_APP_VERS}' => '${TRIMMED_APP_VERS}'"
+          echo "::set-output name=APP_VERS::${TRIMMED_APP_VERS}"
+
+      - name: 🚀 [BUILD] Build application container image
+        id: build-day1-container-image
+        run: |
+          docker-compose build --no-cache \
+              --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}/" \
+              --build-arg APP_NAME="${{ env.APP_DAY1 }}" \
+              --build-arg HASH_TAG="${{ steps.app-vers.outputs.APP_VERS }}" \
+              "${{ env.APP_DAY1 }}"
+
+          docker image ls "${{ env.APP_DAY1 }}"

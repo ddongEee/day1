@@ -22,6 +22,20 @@ services:
       - "${GRAFANA_VOLUME:-./build-src/system-monitoring/grafana/datasources}:/etc/grafana/provisioning/datasources"
     restart: unless-stopped
 
+  day1:
+    image: day1:local
+    container_name: day1
+    ports:
+      - "${DAY1_APP_PORT:-28081}:${DAY1_APP_PORT:-28081}"
+    build:
+      context: .
+      dockerfile: Dockerfile.app.build
+      args:
+        APP_NAME: day1
+    environment:
+      JAVA_OPTS: |
+        -Dserver.port=${DAY1_APP_PORT:-28081}
+
   db:
     image: day1_db:dev
     container_name: db

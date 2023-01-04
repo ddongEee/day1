@@ -1,30 +1,17 @@
-ARG REGISTRY_URL=""
-ARG BASE_IMG_NAME="day1-base-spring"
-ARG BASE_IMG_VERS="local"
-FROM ${REGISTRY_URL}${BASE_IMG_NAME}:${BASE_IMG_VERS}
+# Spring Dockerization > https://github.com/spring-guides/top-spring-boot-docker
+# Base Image > https://hub.docker.com/layers/adoptopenjdk/openjdk11/jre-11.0.16.1_1-alpine/images/sha256-5454cc66dfdb61e8292051d6d9f4ef2c220b468171dc7808c9689acceba3f2f9?context=explore
+ARG REGISTRY_URL="docker.io/adoptopenjdk"
+ARG BASE_IMG_NAME="openjdk11"
+ARG BASE_IMG_VERS="jre-11.0.16.1_1-alpine"
+FROM ${REGISTRY_URL}/${BASE_IMG_NAME}:${BASE_IMG_VERS}
 
-ARG APP_NAME
+ARG COPY_HOME="."
+ARG APP_NAME="day1"
 ARG HASH_TAG="NO_INCLUDED"
 LABEL "com.proserve.poc"="${APP_NAME}:${HASH_TAG}"
 
-WORKDIR /inara
-COPY ${APP_NAME}/build/libs/${APP_NAME}.jar boot.jar
+WORKDIR /poc
+COPY ${COPY_HOME}/build/libs/${APP_NAME}-*.jar boot.jar
 RUN chmod +x boot.jar
 
-RUN groupadd inara && useradd inara -g inara
-RUN chown -R inara:inara .
-
-USER inara
-
-# PPID 0
-# PID 1 > java -Dserver.port=8001 -Dmanagement.server.port=38001 -jar /inara/boot.jar
-ENTRYPOINT exec java ${JAVA_OPTS} -jar /inara/boot.jar
-
-# PPID 0
-# PID 1 > java -Dserver.port=8001 -Dmanagement.server.port=38001 -jar /inara/boot.jar
-# CMD exec java ${JAVA_OPTS} -jar /inara/boot.jar
-
-# PPID 0
-# PID 0 > sh -c java ${JAVA_OPTS} -jar /inara/boot.jar
-# PID 7 > java -Dserver.port=8001 -Dmanagement.server.port=38001 -jar /inara/boot.jar
-# CMD ["sh", "-c", "java ${JAVA_OPTS} -jar /inara/boot.jar"]
+ENTRYPOINT exec java ${JAVA_OPTS} -jar /poc/boot.jar
