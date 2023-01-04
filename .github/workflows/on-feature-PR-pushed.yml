@@ -4,14 +4,82 @@ on:
     branches: ['ci-test']
 
 jobs:
-  unit-test:
-    runs-on: [ 'Linux', 'X64', 'HRA-control', 'dockerd' ]
+  # ==================================================
+  # [ set-env ] Setting Environment & Flag Variables
+  # ==================================================
+  process:
+    runs-on: [ Linux, X64, HRA-control, dockerd ]
+    continue-on-error: false
+    defaults:
+      run:
+        shell: bash
+    env:
+      EXPORT_ARTIFACTS_DIR: artifacts/gradle-builds
+      #      RELEASE_IMAGE_TAG: ${{ needs.set-env.outputs.RELEASE_IMAGE_TAG }}
+      #      TARGET_APP_VERSION: ${{ needs.set-env.outputs.TARGET_APP_VERSION }}
+      JAR_PATH: build/libs
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
+      #          동작 수정후 push
+      #      - name: Extract > Git > 'THIS_BRANCH'
+      #        run: |
+      #          THIS_BRANCH=$(git branch --show-current | awk -F "/" '{print $1}')
+      #          echo "THIS_BRANCH=${THIS_BRANCH}" >> $GITHUB_ENV
+      #      - name: Exit if not on release branch
+      #        if: ${{ env.THIS_BRANCH != 'release' }}
+      #        run: exit -1
+
+      # Extract Information to set GITHUB_ENV
+      # ----------------------------------------
+      # > Project
+      - name: Prints the current branch name
+        run: echo "${GITHUB_BRANCH##*/}"
+      - name: check git!
+        run: |
+          echo "GITHUB_REF : ${GITHUB_REF##*/}"
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+      - name: Extract > Project > 'APP_NAME'
+        run: |
+          TRIMMED_APP_NAME=$(cat settings.gradle | grep 'rootProject.name' | awk -F "'" '{print $2}')
+          echo "APP_NAME=${TRIMMED_APP_NAME}" >> $GITHUB_ENV
+      - name: Extract > Project > 'APP_VERS'
+        run: |
+          FIRST_GREPPED_APP_VERS=$(cat build.gradle | grep "version = " | head -n 1)
+          TRIMMED_APP_VERS=$(echo ${FIRST_GREPPED_APP_VERS} | sed -e 's/-SNAPSHOT//g' | awk -F "'" '{print $2}')
+          echo "> ${FIRST_GREPPED_APP_VERS}"
+          echo "> ${TRIMMED_APP_VERS}"
+          echo "APP_VERS=${TRIMMED_APP_VERS}" >> $GITHUB_ENV
+      # > Git
+      - name: Extract > Git > 'THIS_BRANCH'
+        run: |
+          THIS_BRANCH=$(git branch --show-current | awk -F "/" '{print $1}')
+          echo "THIS_BRANCH=${THIS_BRANCH}" >> $GITHUB_ENV
+      - name: Extract > Git > 'RELEASE_VERSION'
+        run: |
+          RELEASE_VERSION=$(git branch --show-current | awk -F "/" '{print $2}')
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> $GITHUB_ENV
+      - name: Extract > Git > 'SHORTEN_SHA'
+        run: echo "SHORTEN_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      # > Tags
+      - name: Extract > Tag > 'LATEST_TAG'
+        run: echo "LATEST_TAG=${{ env.APP_VERS }}-${{ env.THIS_BRANCH }}" >> $GITHUB_ENV
+
+      - name: Extract > Tag > 'HASHED_TAG'
+        run: echo "HASHED_TAG=${{ env.APP_VERS }}-${{ env.THIS_BRANCH }}-${{ env.SHORTEN_SHA }}" >> $GITHUB_ENV
+
+      - name: Extract > Tag > 'RELEASE_TAG'
+        run: echo "RELEASE_TAG=$GITHUB_REF_NAME" >> $GITHUB_ENV
+
+      - name: Extract > Tag > 'RELEASE_IMAGE_TAG'
+        run: echo "RELEASE_IMAGE_TAG=$(echo $GITHUB_REF_NAME | awk -F "-" '{print $1}' | { read version; echo ${version:2}; })" >> $GITHUB_ENV
+
+      - name: Extract > Tag > 'TARGET_APP_VERSION'
+        run: echo "TARGET_APP_VERSION=$(echo $GITHUB_REF_NAME | awk -F "-" '{print $1}' | { read version; echo ${version:2}; } | awk -F "_" '{print $1}')" >> $GITHUB_ENV
+
+      - name: Extract > Tag > 'TARGET_ENV'
+        run: echo "TARGET_ENV=$(echo $GITHUB_REF_NAME | awk -F "-" '{print $2}')" >> $GITHUB_ENV
