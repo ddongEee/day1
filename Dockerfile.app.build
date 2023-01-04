@@ -1,6 +1,6 @@
 # Spring Dockerization > https://github.com/spring-guides/top-spring-boot-docker
 # Base Image > https://hub.docker.com/layers/adoptopenjdk/openjdk11/jre-11.0.16.1_1-alpine/images/sha256-5454cc66dfdb61e8292051d6d9f4ef2c220b468171dc7808c9689acceba3f2f9?context=explore
-ARG REGISTRY_URL="docker.io/adoptopenjdk"
+ARG REGISTRY_URL="474686834761.dkr.ecr.ap-northeast-2.amazonaws.com"
 ARG BASE_IMG_NAME="openjdk11"
 ARG BASE_IMG_VERS="jre-11.0.16.1_1-alpine"
 FROM ${REGISTRY_URL}/${BASE_IMG_NAME}:${BASE_IMG_VERS}
