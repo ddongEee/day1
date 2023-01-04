@@ -104,7 +104,7 @@ jobs:
         id: build-day1-container-image
         run: |
           docker-compose build --no-cache \
-              --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}/" \
+              --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}" \
               --build-arg APP_NAME="${{ env.APP_DAY1 }}" \
               --build-arg HASH_TAG="${{ steps.app-vers.outputs.APP_VERS }}" \
               "${{ env.APP_DAY1 }}"
