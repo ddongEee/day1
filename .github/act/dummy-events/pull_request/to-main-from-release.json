@@ -1,6 +1,0 @@
-{
-  "pull_request": {
-    "base": { "ref": "main" },
-    "head": { "ref": "release/prepare-candidate" }
-  }
-}

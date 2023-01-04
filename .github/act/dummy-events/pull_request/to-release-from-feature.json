@@ -1,6 +1,0 @@
-{
-  "pull_request": {
-    "base": { "ref": "release/candidate" },
-    "head": { "ref": "feature/ci-test" }
-  }
-}
