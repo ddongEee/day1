@@ -1,0 +1,70 @@
+name: "Extract from Self-hosted Runner Environment Variables"
+description: "Extract variables from Self-hosted Runner environment variables"
+
+outputs:
+  # region
+  AWS_REGION:
+    description: "Get 'AWS_REGION' value (set by self-hosted runner)"
+    value: ${{ steps.aws-region.outputs.AWS_REGION }}
+  # dockerd sidecar
+  HAS_DOCKERD:
+    description: "Get 'HAS_DOCKERD' value (set by self-hosted runner)"
+    value: ${{ steps.has-dockerd.outputs.HAS_DOCKERD }}
+  # IRSA
+  FEDERATED_IR_NAME:
+    description: "Get 'FEDERATED_IR_NAME' value (set by self-hosted runner)"
+    value: ${{ steps.irsa.outputs.FEDERATED_IR_NAME }}
+  FEDERATED_SA_NAME:
+    description: "Get 'FEDERATED_SA_NAME' value (set by self-hosted runner)"
+    value: ${{ steps.irsa.outputs.FEDERATED_SA_NAME }}
+
+runs:
+  using: composite
+  steps:
+    # ========================================
+    # // region
+    # ========================================
+    - name: 🏃 [EXTRACT/RUNNER] AWS_REGION
+      id: aws-region
+      shell: bash
+      run: |
+        [ ${{ env.ACT }} ] && {
+            echo "🔎 Dummy environment variable of act (for ACT in local running)"
+            echo "::set-output name=AWS_REGION::${AWS_REGION:-ap-northeast-2}"
+            exit 0
+        }
+        echo "::set-output name=AWS_REGION::${AWS_REGION:-ap-northeast-2}"
+
+    # ========================================
+    # // dockerd sidecar
+    # ========================================
+    - name: 🏃 [EXTRACT/RUNNER] HAS_DOCKERD
+      id: has-dockerd
+      shell: bash
+      run: |
+        [ ${{ env.ACT }} ] && {
+            echo "🔎 DockerHost is shared from host (for ACT in local running)"
+            HAS_DOCKERD="true"
+        }
+        echo "::set-output name=HAS_DOCKERD::${HAS_DOCKERD}"
+
+    # ========================================
+    # // IRSA
+    # ========================================
+    - if: ${{ !env.ACT }}
+      name: 🏃 [EXTRACT/RUNNER] IRSA
+      id: irsa
+      shell: bash
+      run: |
+        [ -z ${FEDERATED_IR_NAME} ] && {
+            echo "🔎 The env 'FEDERATED_IR_NAME' is not allocated."
+            echo "🔎 To assume, allocate it with the env 'FEDERATED_SA_NAME' value."
+            export FEDERATED_IR_NAME=${FEDERATED_SA_NAME}
+        }
+        [ -z ${FEDERATED_IR_NAME} ] && {
+            echo "🙅‍♂️ [SUSPEND] The env 'FEDERATED_IR_NAME' is not allocated (neither allocate try with 'FEDERATED_IR_NAME')" >&2
+            exit 1;
+        }
+        echo "🙆‍♂️ [PASS] The IRSA environments is exists."
+        echo "::set-output name=FEDERATED_IR_NAME::${FEDERATED_IR_NAME}"
+        echo "::set-output name=FEDERATED_SA_NAME::${FEDERATED_SA_NAME}"
