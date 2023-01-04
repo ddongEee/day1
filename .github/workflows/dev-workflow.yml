@@ -121,6 +121,6 @@ jobs:
               --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}" \
               --build-arg APP_NAME="${{ env.DB_DAY1 }}" \
               --build-arg HASH_TAG="${{ steps.app-vers.outputs.APP_VERS }}" \
-              "${{ env.DB_DAY1 }}" "${{ env.MIG_DB_SCHEMA }}" "${{ env.MIG_DB_DATASET }}"
+              "${{ env.DB_DAY1 }}"
 
           docker image ls "${{ env.DB_DAY1 }}"    
