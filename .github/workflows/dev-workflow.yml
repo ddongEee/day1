@@ -20,7 +20,7 @@ env:
   BASE_ECR_IMAGE_NAME: day1-base-spring
   BASE_ECR_IMAGE_VERS: "0.1.0"
   # GitOps: Integration target of 'git branches'
-  GITOPS_REPO_NAME: k8s-workload
+  GITOPS_REPO_NAME: day1
 
 jobs:
   # ===============================================================================
