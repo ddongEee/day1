@@ -116,8 +116,7 @@ jobs:
       - name: 🚀 [ECR] Push to ECR repo
         id: push-day1-container-image
         env:
-#          ecr-repo-url: ${{ steps.ecr-login.outputs.registry }}/${{ env.ECR_REPO_PREFIX }}/${{ matrix.project }}
-          ecr-repo-url: "474686834761.dkr.ecr.ap-northeast-2.amazonaws.com/day1-app"
+          ecr-repo-url: ${{ steps.ecr-login.outputs.registry }}${{ env.APP_DAY1 }}
         run: |
           ECR_HASH_TAG="${{ env.ecr-repo-url }}:${{ steps.app-vers.outputs.APP_VERS }}"
           docker tag ${{ env.APP_DAY1 }}:local ${ECR_HASH_TAG}
