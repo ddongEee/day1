@@ -37,7 +37,7 @@ services:
         -Dserver.port=${DAY1_APP_PORT:-28081}
 
   db:
-    image: day1_db:dev
+    image: day1_db:local
     container_name: db
     build:
       context: build-src/system-persistence/db

@@ -103,6 +103,10 @@ jobs:
           echo "> '${FIRST_GREPPED_APP_VERS}' => '${TRIMMED_APP_VERS}'"
           echo "::set-output name=APP_VERS::${TRIMMED_APP_VERS}"
 
+          SHORTEN_SHA=$(git rev-parse --short HEAD)
+          echo "> SHORTEN_SHA: ${SHORTEN_SHA}"
+          echo "::set-output name=GIT_HASH::${SHORTEN_SHA}"
+
       - name: 🚀 [BUILD] Build application container image
         id: build-day1-container-image
         run: |
@@ -113,14 +117,6 @@ jobs:
               "${{ env.APP_DAY1 }}"
 
           docker image ls "${{ env.APP_DAY1 }}"
-      - name: 🚀 [ECR] Push to ECR repo
-        id: push-day1-container-image
-        env:
-          ecr-repo-url: ${{ steps.ecr-login.outputs.registry }}/${{ env.APP_DAY1 }}
-        run: |
-          ECR_HASH_TAG="${{ env.ecr-repo-url }}:${{ steps.app-vers.outputs.APP_VERS }}"
-          docker tag ${{ env.APP_DAY1 }}:local ${ECR_HASH_TAG}
-          docker push ${ECR_HASH_TAG}
 
       - name: 🚀 [BUILD] Build db container image
         id: build-db-container-image
@@ -132,3 +128,24 @@ jobs:
               "${{ env.DB_DAY1 }}"
 
           docker image ls "${{ env.DB_DAY1 }}"    
+
+      # TODO: DB + Migration 포함해서 서비스 기동
+
+      # TODO: E2E 테스트 실행 환경 구성
+
+      # TODO: E2E 테스트 수행
+      
+      # TODO: 무관하게 시각화된 레포트 생성 및 업로드
+
+      # TODO: 'main' 브랜치에서만 푸시하도록 조건문 제어
+      - name: 🚀 [ECR] Push to ECR repo
+        id: push-day1-container-image
+        env:
+          ecr-repo-url: ${{ steps.ecr-login.outputs.registry }}/${{ env.APP_DAY1 }}
+        run: |
+          ECR_VERS_TAG="${{ env.ecr-repo-url }}:${{ steps.app-vers.outputs.APP_VERS }}"
+          ECR_HASH_TAG="${{ env.ecr-repo-url }}:${{ steps.app-vers.outputs.GIT_HASH }}"
+          docker tag ${{ env.APP_DAY1 }}:local ${ECR_VERS_TAG}
+          docker tag ${{ env.APP_DAY1 }}:local ${ECR_HASH_TAG}
+          docker push ${ECR_VERS_TAG}
+          docker push ${ECR_HASH_TAG}
