@@ -8,7 +8,7 @@ defaults:
 
 env:
   # Monorepo
-  RUNNABLE_PKG_NAME: "other-simple-microservice"
+  RUNNABLE_PKG_NAME: "."
   BUILD_FILE_NAME: "build.gradle"
   COMMON_INCLUDES: "gradle.properties, *.gradle, Dockerfile.app.build"
   # Runtime Versions of Applications
