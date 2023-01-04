@@ -17,6 +17,9 @@ env:
   # Application
   APP_DAY1: day1
   APP_DAY2: day2
+  DB_DAY1: db
+  MIG_DB_SCHEMA: mig-db-schema
+  MIG_DB_DATASET: mig-db-dataset
   # GitOps: Integration target of 'git branches'
   GITOPS_REPO_NAME: day1-appchart
 
@@ -110,3 +113,14 @@ jobs:
               "${{ env.APP_DAY1 }}"
 
           docker image ls "${{ env.APP_DAY1 }}"
+
+      - name: 🚀 [BUILD] Build db container image
+        id: build-db-container-image
+        run: |
+          docker-compose build --no-cache \
+              --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}" \
+              --build-arg APP_NAME="${{ env.DB_DAY1 }}" \
+              --build-arg HASH_TAG="${{ steps.app-vers.outputs.APP_VERS }}" \
+              "${{ env.DB_DAY1 }}" "${{ env.MIG_DB_SCHEMA }}" "${{ env.MIG_DB_DATASET }}"
+
+          docker image ls "${{ env.DB_DAY1 }}"    
