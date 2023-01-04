@@ -9,7 +9,7 @@ inputs:
   common-includes:
     description: "The files or folders (delimiter: ',') are included commonly to check all (basic include: .github/workflows/ & .github/custom-actions/)"
     required: true
-    default: "gradle.properties, *.gradle.kts, Dockerfile.app.build"
+    default: "gradle.properties, *.gradle, Dockerfile.app.build"
   common-ignores:
     description: "The files or folders (delimiter: ',') are ignored on all check step (basic include: gradle-ci.properties)"
     required: true
@@ -18,7 +18,7 @@ inputs:
     required: true
     default: "student, teacher"
   working-directory:
-    description: "Where the package management file 'build.gradle[.kts]' exist"
+    description: "Where the package management file 'build.gradle' exist"
     required: false
     default: "."
 

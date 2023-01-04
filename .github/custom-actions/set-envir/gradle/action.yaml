@@ -59,7 +59,7 @@ runs:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ matrix.project }}-${{ hashFiles('settings.gradle.kts', 'build.gradle.kts', 'gradle/wrapper/gradle-wrapper.properties') }}
+        key: ${{ runner.os }}-gradle-${{ matrix.project }}-${{ hashFiles('settings.gradle', 'build.gradle', 'gradle/wrapper/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-${{ matrix.project }}-
           ${{ runner.os }}-gradle-

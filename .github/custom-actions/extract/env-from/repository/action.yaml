@@ -10,10 +10,10 @@ inputs:
 outputs:
   # app
   APP_NAME:
-    description: "Application name (extracted from 'setting.gradle.kts')"
+    description: "Application name (extracted from 'setting.gradle')"
     value: ${{ steps.app-name.outputs.APP_NAME }}
   APP_VERS:
-    description: "Application version (extracted from 'build.gradle.kts')"
+    description: "Application version (extracted from 'build.gradle')"
     value: ${{ steps.app-vers.outputs.APP_VERS }}
   # git
   GIT_BRANCH_SHA:
@@ -54,7 +54,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
-        TRIMMED_APP_NAME=$(cat settings.gradle.kts | grep 'rootProject.name' | awk -F '"' '{print $2}')
+        TRIMMED_APP_NAME=$(cat settings.gradle | grep 'rootProject.name' | awk -F '"' '{print $2}')
         APP_NAME=$(echo ${TRIMMED_APP_NAME} | tr '[:upper:]' '[:lower:]')
         echo "> '${TRIMMED_APP_NAME}' => '${APP_NAME}'"
         echo "::set-output name=APP_NAME::${APP_NAME}"

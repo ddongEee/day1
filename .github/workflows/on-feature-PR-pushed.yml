@@ -1,7 +1,7 @@
 name: on-feature-pr-pushed
 on:
   push:
-    branches: ['ci-test']
+    branches: ['ci-test2']
 
 jobs:
   # ==================================================
