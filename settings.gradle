@@ -1,2 +1,2 @@
-rootProject.name = 'day1'
-include 'other-simple-microservice'
+rootProject.name = "day1"
+include "other-simple-microservice"
