@@ -120,7 +120,7 @@ jobs:
         run: |
           ECR_HASH_TAG="${{ env.ecr-repo-url }}:${{ steps.app-vers.outputs.APP_VERS }}"
           docker tag ${{ env.APP_DAY1 }}:local ${ECR_HASH_TAG}
-          docker push ${ ECR_HASH_TAG }
+          docker push ${ECR_HASH_TAG}
 
       - name: 🚀 [BUILD] Build db container image
         id: build-db-container-image
