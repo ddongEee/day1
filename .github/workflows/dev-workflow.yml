@@ -124,7 +124,7 @@ jobs:
           docker-compose build --no-cache \
           --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} db
           
-          docker image ls db
+          docker image ls day1_db
 
       - name: 🚀 [BUILD] Build mig-db-schema container image
         id: build-mig-db-schema-container-image
@@ -132,7 +132,7 @@ jobs:
           docker-compose build --parallel \
             --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} mig-db-schema
           
-          docker image ls mig-db-schema
+          docker image ls day1_mig
 
       - name: 🚀 [BUILD] Build mig-db-dataset container image
         id: build-mig-db-dataset-container-image
@@ -140,13 +140,13 @@ jobs:
           docker-compose build --parallel \
             --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} mig-db-dataset
           
-          docker image ls mig-db-dataset
+          docker image ls day1_mig
 
-      - name: 🚀 [RUN] Run & Migrate db container
+      - name: 🏃 [RUN] Run & Migrate db container
         id: run-and-mig-db-container
         run: |
           docker-compose up -d db
-          docker-compose run mig-db-schema mig-db-dataset
+          docker-compose up mig-db-schema mig-db-dataset
           docker-compose ps -a
 
       # TODO: DB + Migration 포함해서 서비스 기동
