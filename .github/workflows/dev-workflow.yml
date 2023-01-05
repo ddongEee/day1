@@ -149,6 +149,12 @@ jobs:
           docker-compose up mig-db-schema mig-db-dataset
           docker-compose ps -a
 
+      - name: 🏃 [RUN] Run day1 app
+        id: run-app-container
+        run: |
+          docker-compose up "${{ env.APP_DAY1 }}"
+          docker-compose ps -a   
+
       # TODO: DB + Migration 포함해서 서비스 기동
 
       # TODO: E2E 테스트 실행 환경 구성
