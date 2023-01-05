@@ -154,7 +154,7 @@ jobs:
         env:
           TARGET_CONTAINER_PORT: 28081
           # TOTAL_WAIT_TIME = <INITIAL_WAIT> + (<SEQ_MAX_COUNT> * <SCAN_INTERVAL>)
-          INITIAL_WAIT: 5 # seconds
+          INITIAL_WAIT: 20 # seconds
           SEQ_MAX_COUNT: 5
           SCAN_INTERVAL: 3 # seconds
         run: |
@@ -166,11 +166,13 @@ jobs:
           echo "" && echo "> Done."
           docker-compose ps -a
 
+          echo "-----"
+          docker-compose logs "${{ env.APP_DAY1 }}"
+          echo "-----"
+
           echo "" && echo "> Check application container status on ${{ env.SEQ_MAX_COUNT }} times per ${{ env.SCAN_INTERVAL }} seconds."
           for i in `seq ${{ env.SEQ_MAX_COUNT }}`; do
-            echo "@@@START"
             RES_MSG=$(curl -s http://localhost:${{ env.TARGET_CONTAINER_PORT }}/hello)
-            echo "@@@END"
             if [ "${RES_MSG}" == "hello" ]; then
               echo "> [PASS] Application is healthy." && exit 0
             fi
