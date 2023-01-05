@@ -107,17 +107,6 @@ jobs:
           echo "> SHORTEN_SHA: ${SHORTEN_SHA}"
           echo "::set-output name=GIT_HASH::${SHORTEN_SHA}"
 
-      - name: 🚀 [BUILD] Build application container image
-        id: build-day1-container-image
-        run: |
-          docker-compose build --no-cache \
-              --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}" \
-              --build-arg APP_NAME="${{ env.APP_DAY1 }}" \
-              --build-arg HASH_TAG="${{ steps.app-vers.outputs.APP_VERS }}" \
-              "${{ env.APP_DAY1 }}"
-
-          docker image ls "${{ env.APP_DAY1 }}"
-
       - name: 🚀 [BUILD] Build db container image
         id: build-db-container-image
         run: |
@@ -149,13 +138,45 @@ jobs:
           docker-compose up mig-db-schema mig-db-dataset
           docker-compose ps -a
 
+      - name: 🚀 [BUILD] Build application container image
+        id: build-day1-container-image
+        run: |
+          docker-compose build --no-cache \
+              --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}" \
+              --build-arg APP_NAME="${{ env.APP_DAY1 }}" \
+              --build-arg HASH_TAG="${{ steps.app-vers.outputs.APP_VERS }}" \
+              "${{ env.APP_DAY1 }}"
+
+          docker image ls "${{ env.APP_DAY1 }}"
+
       - name: 🏃 [RUN] Run day1 app
         id: run-app-container
+        env:
+          TARGET_CONTAINER_PORT: 28081
+          # TOTAL_WAIT_TIME = <INITIAL_WAIT> + (<SEQ_MAX_COUNT> * <SCAN_INTERVAL>)
+          INITIAL_WAIT: 5 # seconds
+          SEQ_MAX_COUNT: 5
+          SCAN_INTERVAL: 3 # seconds
         run: |
-          docker-compose up "${{ env.APP_DAY1 }}"
-          docker-compose ps -a   
+          docker-compose up -d "${{ env.APP_DAY1 }}"
 
-      # TODO: DB + Migration 포함해서 서비스 기동
+          echo "" && echo "> Initial wait during ${{ env.INITIAL_WAIT }} seconds."
+          sleep ${{ env.INITIAL_WAIT }}
+
+          echo "" && echo "> Done."
+          docker-compose ps -a
+
+          echo "" && echo "> Check application container status on ${{ env.SEQ_MAX_COUNT }} times per ${{ env.SCAN_INTERVAL }} seconds."
+          for i in `seq ${{ env.SEQ_MAX_COUNT }}`; do
+            RES_MSG=$(curl -s http://localhost:${{ env.TARGET_CONTAINER_PORT }}/hello)
+            if [ "${RES_MSG}" == "hello" ]; then
+              echo "> [PASS] Application is healthy." && exit 0
+            fi
+            echo "> [WAIT] Retry after ${{ env.SCAN_INTERVAL }} seconds soon.."
+            sleep ${{ env.SCAN_INTERVAL }}
+          done
+          echo "> [FAIL] Time up! Application is finally in unhealthy state. Check this logs."
+          docker-compose logs ${{ env.APP_DAY1 }} && exit 1L:
 
       # TODO: E2E 테스트 실행 환경 구성
 

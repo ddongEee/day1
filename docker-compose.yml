@@ -33,6 +33,8 @@ services:
       args:
         APP_NAME: day1
     environment:
+      SERVER_PORT: ${DAY1_APP_PORT:-28081}
+      DB_HOST: db
       JAVA_OPTS: |
         -Dserver.port=${DAY1_APP_PORT:-28081}
 

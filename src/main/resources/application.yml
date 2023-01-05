@@ -3,7 +3,7 @@
 ## * Ref. https://docs.spring.io/spring-boot/docs/2.6.4/reference/htmlsingle/#application-properties.server
 ## ======================================
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
   servlet:
     context-path: "/"
     encoding:
@@ -11,10 +11,10 @@ server:
       enabled: true
       force: true
   tomcat:
-    accept-count: 100
+    accept-count: ${SERVER_ACCEPT_COUNT:100}
     threads:
-      max: 200
-      min-spare: 100
+      max: ${SERVER_TRHEAD_MAX:200}
+      min-spare: ${SERVER_TRHEAD_MIN:100}
 
 ## ===================================
 ## TODO: Spring Actuator
@@ -34,23 +34,23 @@ spring:
   application:
     name: day1app
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/day1
-    username: postgres
-    password: postgres1234
+    driver-class-name: "${DB_DRIVER_CLASS_NAME:org.postgresql.Driver}"
+    url: "jdbc:${DB_ENGINE:postgresql}://${DB_HOST:localhost}:${DB_PORT:5432},${DB_HOST_READONLY:localhost}:${DB_PORT:5432}/${DB_DATABASE_NAME:day1}?${DB_PRIMARY_OPTS:}"
+    username: "${DB_USERNAME:postgres}"
+    password: "${DB_PASSWORD:postgres1234}"
     connectionTestQuery: "SELECT 1"
-    maximumPoolSize: 50
-    minimumIdle: 50
+    maximumPoolSize: ${DB_MAX_POOL_SIZE:50}
+    minimumIdle: ${DB_MIN_IDLE:50}
   datasource-read-only:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/day1
-    username: postgres
-    password: postgres1234
+    driver-class-name: "${DB_DRIVER_CLASS_NAME:org.postgresql.Driver}"
+    url: "jdbc:${DB_ENGINE:postgresql}://${DB_HOST:localhost}:${DB_PORT:5432},${DB_HOST_READONLY:localhost}:${DB_PORT:5432}/${DB_DATABASE_NAME:day1}?${DB_SECONDARY_OPTS:}"
+    username: "${DB_USERNAME:postgres}"
+    password: "${DB_PASSWORD:postgres1234}"
     connectionTestQuery: "SELECT 1"
-    maximumPoolSize: 50
-    minimumIdle: 50
+    maximumPoolSize: ${DB_MAX_POOL_SIZE:50}
+    minimumIdle: ${DB_MIN_IDLE:50}
   jpa:
-    database: "postgresql"
+    database: "${DB_ENGINE:postgresql}"
     hibernate:
       ddl-auto: validate # create disabled: schema has been managed by flyway on docker-compose
       naming:
@@ -58,12 +58,12 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        default_schema: "builder"
+        default_schema: "${DB_DEFAULT_SCHEMA:builder}"
         dialect: org.hibernate.dialect.PostgreSQLDialect
         hbm2ddl:
           import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
         format_sql: false
-        show-sql:
+        show-sql: false
         use_sql_comments: true
         use_jdbc_metadata_defaults: true
 
@@ -95,4 +95,4 @@ management:
 
 microservice:
   day2:
-    url: "http://localhost:8082"
+    url: "http://${DAY2_HOST:localhost}:${DAY2_PORT:8082}"
