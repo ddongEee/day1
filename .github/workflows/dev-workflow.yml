@@ -168,7 +168,9 @@ jobs:
 
           echo "" && echo "> Check application container status on ${{ env.SEQ_MAX_COUNT }} times per ${{ env.SCAN_INTERVAL }} seconds."
           for i in `seq ${{ env.SEQ_MAX_COUNT }}`; do
+            echo "@@@START"
             RES_MSG=$(curl -s http://localhost:${{ env.TARGET_CONTAINER_PORT }}/hello)
+            echo "@@@END"
             if [ "${RES_MSG}" == "hello" ]; then
               echo "> [PASS] Application is healthy." && exit 0
             fi
