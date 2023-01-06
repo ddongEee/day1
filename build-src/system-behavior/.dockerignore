@@ -1,3 +1,13 @@
+# Yarn Berry Plug'n'Play
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+!.yarn/cache/
+!.pnp.*
+
 # Settings
 .sonarlint/
 .vscode/

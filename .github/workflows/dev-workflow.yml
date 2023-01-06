@@ -36,7 +36,7 @@ jobs:
       # > Set: AWS
       # ------------------------------
       - name: 🚀 [AWS] Assume using IRSA # Ref. https://github.com/aws-actions/configure-aws-credentials#self-hosted-runners
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v1-node16
         with:
           aws-region: "ap-northeast-2"
           role-to-assume: "SHARED-EKS-self-hosted-runner" # Federated IAM Role name
