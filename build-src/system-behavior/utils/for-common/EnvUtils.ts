@@ -6,7 +6,7 @@ import { LogLevelNames } from "loglevel";
 dotenv.config();
 
 const fixedTestExecutionTime = new Date()
-  .toLocaleString("ko-KR", { timeZone: process.env.TZ ?? "Asia/Seoul" })
+  .toLocaleString("en-US", { timeZone: process.env.TZ ?? "Asia/Seoul" })
   .replace(/T/, " ")
   .replace(/\..+/, "");
 
