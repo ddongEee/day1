@@ -116,9 +116,6 @@ docker-compose up -d prometheus grafana
 ### Try Functional Test on E2E (end-to-end)
 
 ```bash
-# Create docker volume (only once)
-docker volume create --name=e2e-data
-
 # Build E2E container image
 docker-compose build --no-cache e2e
 

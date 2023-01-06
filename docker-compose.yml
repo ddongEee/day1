@@ -51,14 +51,17 @@ services:
       SYSTEM_PORT: ${DAY1_APP_PORT:-28081}
       SYSTEM_VERSION: ${APP_VERS:-SNAPSHOT}
       SYSTEM_RUNTIME: dockerd
-    # entrypoint: sh
+    command: ["sh", "-c", "cd /system-behavior && yarn run test"]
     volumes:
-      - ${E2E_VOLUME:-./build-src/system-behavior/outputs/mounts/report}:/system-behavior/outputs/report
+      - ./build-src/system-behavior/outputs/mounts/basic:/system-behavior/outputs/basic
 
   e2e-report:
     extends:
       service: e2e
-    command: report
+    command: ["sh", "-c", "cd /system-behavior && yarn run report"]
+    volumes:
+      - ./build-src/system-behavior/outputs/mounts/basic:/system-behavior/outputs/basic
+      - ./build-src/system-behavior/outputs/mounts/report:/system-behavior/outputs/report
 
   db:
     image: day1_db:local
@@ -121,6 +124,4 @@ services:
 
 volumes:
   db-data:
-    external: true
-  e2e-data:
     external: true

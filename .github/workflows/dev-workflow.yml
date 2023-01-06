@@ -108,34 +108,31 @@ jobs:
           echo "::set-output name=GIT_HASH::${SHORTEN_SHA}"
 
       - name: 🚀 [BUILD] Build db container image
-        id: build-db-container-image
         run: |
           docker-compose build --no-cache \
-          --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} db
-          
+              --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} \
+              db
           docker image ls day1_db
 
       - name: 🚀 [BUILD] Build mig-db-schema container image
-        id: build-mig-db-schema-container-image
         run: |
           docker-compose build --parallel \
-            --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} mig-db-schema
-          
+              --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} \
+              mig-db-schema
           docker image ls day1_mig
 
       - name: 🚀 [BUILD] Build mig-db-dataset container image
-        id: build-mig-db-dataset-container-image
         run: |
           docker-compose build --parallel \
-            --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} mig-db-dataset
-          
+              --build-arg BASE_REGISTRY=${{ steps.ecr-login.outputs.registry }} \
+              mig-db-dataset
           docker image ls day1_mig
 
       - name: 🏃 [RUN] Run & Migrate db container
-        id: run-and-mig-db-container
         run: |
           docker-compose up -d db
-          docker-compose up mig-db-schema mig-db-dataset
+          docker-compose run mig-db-schema
+          docker-compose run mig-db-dataset
           docker-compose ps -a
 
       - name: 🚀 [BUILD] Build application container image
@@ -146,7 +143,6 @@ jobs:
               --build-arg APP_NAME="${{ env.APP_DAY1 }}" \
               --build-arg HASH_TAG="${{ steps.app-vers.outputs.APP_VERS }}" \
               "${{ env.APP_DAY1 }}"
-
           docker image ls "${{ env.APP_DAY1 }}"
 
       - name: 🏃 [RUN] Run day1 app
@@ -182,11 +178,35 @@ jobs:
           echo "> [FAIL] Time up! Application is finally in unhealthy state. Check this logs."
           docker-compose logs ${{ env.APP_DAY1 }} && exit 1L:
 
-      # TODO: E2E 테스트 실행 환경 구성
+      - name: 🚀 [BUILD] Build end-to-end test container image
+        run: |
+          docker-compose build --no-cache \
+              --build-arg REGISTRY_URL="${{ steps.ecr-login.outputs.registry }}" \
+              e2e
 
-      # TODO: E2E 테스트 수행
+          docker image ls "${{ env.APP_DAY1 }}_e2e"
+
+      - name: 🏃 [RUN] BDD-REST > End-to-end test
+        env:
+          TARGET_CONTAINER_PORT: 28081
+        run: |
+          SYSTEM_PORT=${{ env.TARGET_CONTAINER_PORT }}
+          SYSTEM_VERSION="${{ steps.app-vers.outputs.APP_VERS }} (commit hash: ${{ steps.app-vers.outputs.GIT_HASH }})"
+          SYSTEM_RUNTIME="dockerd: docker-compose on actions-runner"
+          docker-compose run e2e
       
-      # TODO: 무관하게 시각화된 레포트 생성 및 업로드
+      # Export: Upload BDD Report
+      # -----------------------------------------
+      - if: ${{ always() }}
+        name: 🚀 [EXPORT] BDD-REST > Visualized Report
+        run: docker-compose run e2e-report
+
+      - if: ${{ always() }}
+        name: 🚀 [EXPORT] BDD-REST > Visualized Report > Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: system-behavior-report
+          path: ./build-src/system-behavior/outputs/mounts/report
 
       # TODO: 'main' 브랜치에서만 푸시하도록 조건문 제어
       - name: 🚀 [ECR] Push to ECR repo

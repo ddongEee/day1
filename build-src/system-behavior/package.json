@@ -7,9 +7,9 @@
     "sample": "yarn run e2e:console --tags \"not @WIP and not @subscription\"",
     "sample:report": "yarn run e2e:report --tags \"not @WIP and not @subscription\"",
     "test": "yarn run e2e:console --tags \"not @WIP and not @Example\" && yarn run report",
-    "ci": "yarn run e2e:report --tags \"not @WIP and not @Example\" && yarn run report",
-    "report": "yarn run report:remove && yarn run report:create",
-    "report:remove": "rm -rf outputs/report/*",
+    "ci": "yarn run e2e:report --tags \"not @WIP and not @Example\"",
+    "report": "yarn run report:remove || yarn run report:create",
+    "report:remove": "rm -rf outputs/report",
     "report:create": "ts-node cucumber.report.ts --module commonjs",
     "lint": "lint-staged"
   },

@@ -31,4 +31,4 @@ RUN mkdir -p outputs/report
 RUN chown -R node:node /system-behavior
 USER node
 
-ENTRYPOINT ["sh", "-c", "cd /system-behavior && yarn run ci"]
+CMD ["sh", "-c", "cd /system-behavior && yarn run ci"]
