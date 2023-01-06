@@ -48,6 +48,8 @@ docker-compose build --no-cache \
     mig-db-schema mig-db-dataset
 ```
 
+![compose-1.png](./build-src/others/compose-1.png)
+
 ### Prepare JVM
 
 Install JDK on [OpenJDK](https://formulae.brew.sh/formula/openjdk#default)
@@ -83,9 +85,13 @@ brew install openjdk@11
 ./gradlew clean build
 
 # Start SpringBoot
-./gradlew bootrun      # :8081
-./gradlew bootrun:day2 # :8082
+./gradlew bootRun # :8081
+./gradlew other-simple-microservice:bootRun # :8082
+```
 
+- Local swagger url on `:8081` : <http://localhost:8081/swagger-ui/index.html>
+
+```bash
 # Start SpringBoot container
 docker-compose build --no-cache \
     --build-arg HASH_TAG="${APP_VERS:-SNAPSHOT}" \
@@ -98,7 +104,7 @@ docker-compose up -d day1
 docker-compose logs -f day1
 ```
 
-- Local swagger url : <http://localhost:8081/swagger-ui/index.html>
+![compose-2.png](./build-src/others/compose-2.png)
 
 ### Prepare Observability
 
@@ -122,15 +128,15 @@ docker-compose build --no-cache e2e
 # Run E2E container
 docker-compose run e2e
 
-# Check report
-serve \
-  -l ${DAY1_E2E_REPORT_PORT:-38081} \
-  -s ./build-src/system-behavior/outputs/mounts/report
+# Check report on browser
+open ./build-src/system-behavior/outputs/mounts/report/index.html
 ```
 
 - [`build-src/system-behavior`](./build-src/system-behavior#readme): BDD-suite to test API scenario.
 
 - (option) [`build-src/system-stub`](./build-src/system-stub#readme): Stub-suite to server mocked API.
+
+![compose-3.png](./build-src/others/compose-3.png)
 
 ## Additional Informantions
 
