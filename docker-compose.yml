@@ -38,6 +38,28 @@ services:
       JAVA_OPTS: |
         -Dserver.port=${DAY1_APP_PORT:-28081}
 
+  e2e:
+    image: day1_e2e:local
+    container_name: e2e-bdd-rest
+    build:
+      context: build-src/system-behavior
+      dockerfile: Dockerfile-Cucumber
+    environment:
+      SYSTEM_NAME: Day1
+      SYSTEM_PROTOCOL: http
+      SYSTEM_HOST: day1
+      SYSTEM_PORT: ${DAY1_APP_PORT:-28081}
+      SYSTEM_VERSION: ${APP_VERS:-SNAPSHOT}
+      SYSTEM_RUNTIME: dockerd
+    # entrypoint: sh
+    volumes:
+      - ${E2E_VOLUME:-./build-src/system-behavior/outputs/mounts/report}:/system-behavior/outputs/report
+
+  e2e-report:
+    extends:
+      service: e2e
+    command: report
+
   db:
     image: day1_db:local
     container_name: db
@@ -99,4 +121,6 @@ services:
 
 volumes:
   db-data:
+    external: true
+  e2e-data:
     external: true

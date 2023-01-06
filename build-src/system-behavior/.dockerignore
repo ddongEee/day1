@@ -1,0 +1,17 @@
+# Settings
+.sonarlint/
+.vscode/
+.editorconfig
+.env
+.eslint*
+.git*
+.nvmrc
+
+# Build result files
+coverage/
+outputs/
+!outputs/basic/
+!outputs/basic/will.be.auto-created.by.cucumber
+
+# Others
+*.md

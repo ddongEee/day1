@@ -1,0 +1,34 @@
+# Base Image > https://hub.docker.com/layers/library/node/18.12.1-alpine3.17/images/sha256-b375b98d1dcd56f5783efdd80a4d6ff5a0d6f3ce7921ec99c17851db6cba2a93?context=explore
+ARG REGISTRY_URL="docker.io"
+ARG BASE_IMG_NAME="node"
+ARG BASE_IMG_VERS="18.12.1-alpine3.17"
+FROM ${REGISTRY_URL}/${BASE_IMG_NAME}:${BASE_IMG_VERS}
+
+# Timezone
+ENV TZ=Asia/Seoul
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
+# Binaries
+WORKDIR /system-behavior
+COPY .yarn/ .yarn/
+COPY package.json yarn.lock .yarnrc.yml .pnp.cjs .pnp.loader.mjs tsconfig.json ./
+COPY cucumber.js cucumber.setup.js cucumber.report.ts ./
+
+# BDD
+COPY features/ features/
+COPY fixtures/ fixtures/
+COPY outputs/ outputs/
+COPY step_definitions/ step_definitions/
+COPY utils/ utils/
+
+# Reports
+RUN mkdir -p outputs/basic
+RUN mkdir -p outputs/report
+
+# Permission
+RUN chown -R node:node /system-behavior
+USER node
+
+ENTRYPOINT ["sh", "-c", "cd /system-behavior && yarn run ci"]
