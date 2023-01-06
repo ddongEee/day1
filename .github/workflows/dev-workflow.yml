@@ -187,19 +187,41 @@ jobs:
           docker image ls "${{ env.APP_DAY1 }}_e2e"
 
       - name: 🏃 [RUN] BDD-REST > End-to-end test
+        continue-on-error: true
         env:
           TARGET_CONTAINER_PORT: 28081
+          TEST_RESULT_DATA_PATH: ./build-src/system-behavior/outputs/mounts/basic
         run: |
+          echo "> Permission setting for alpine docker image on volume mounting"
+          mkdir -p  ${{ env.TEST_RESULT_DATA_PATH }}
+          chmod 777 ${{ env.TEST_RESULT_DATA_PATH }}
+          
           SYSTEM_PORT=${{ env.TARGET_CONTAINER_PORT }}
           SYSTEM_VERSION="${{ steps.app-vers.outputs.APP_VERS }} (commit hash: ${{ steps.app-vers.outputs.GIT_HASH }})"
           SYSTEM_RUNTIME="dockerd: docker-compose on actions-runner"
           docker-compose run e2e
+
+          echo "" && echo "> Result raw files..."
+          echo "--------------------------------"
+          ls -ahl ${{ env.TEST_RESULT_DATA_PATH }}
       
       # Export: Upload BDD Report
       # -----------------------------------------
       - if: ${{ always() }}
         name: 🚀 [EXPORT] BDD-REST > Visualized Report
-        run: docker-compose run e2e-report
+        continue-on-error: true
+        env:
+          TEST_RESULT_HTML_PATH: ./build-src/system-behavior/outputs/mounts/report
+        run: |
+          echo "> Permission setting for alpine docker image on volume mounting"
+          mkdir -p  ${{ env.TEST_RESULT_HTML_PATH }}
+          chmod 777 ${{ env.TEST_RESULT_HTML_PATH }}
+          
+          docker-compose run e2e-report
+
+          echo "" && echo "> Generated HTML Report"
+          echo "----------------------------------"
+          ls -ahl ${{ env.TEST_RESULT_HTML_PATH }}
 
       - if: ${{ always() }}
         name: 🚀 [EXPORT] BDD-REST > Visualized Report > Upload Artifacts

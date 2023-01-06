@@ -51,7 +51,7 @@ services:
       SYSTEM_PORT: ${DAY1_APP_PORT:-28081}
       SYSTEM_VERSION: ${APP_VERS:-SNAPSHOT}
       SYSTEM_RUNTIME: dockerd
-    command: ["sh", "-c", "cd /system-behavior && yarn run test"]
+    command: ["sh", "-c", "cd /system-behavior && yarn run ci"]
     volumes:
       - ./build-src/system-behavior/outputs/mounts/basic:/system-behavior/outputs/basic
 
