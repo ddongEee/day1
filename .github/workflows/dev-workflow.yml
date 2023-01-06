@@ -238,9 +238,26 @@ jobs:
         env:
           ecr-repo-url: ${{ steps.ecr-login.outputs.registry }}/${{ env.APP_DAY1 }}
         run: |
-          ECR_VERS_TAG="${{ env.ecr-repo-url }}:${{ steps.app-vers.outputs.APP_VERS }}"
-          ECR_HASH_TAG="${{ env.ecr-repo-url }}:${{ steps.app-vers.outputs.GIT_HASH }}"
+          ALPHA_VERS_TAG="${{ steps.app-vers.outputs.APP_VERS }}-alpha"
+          ALPHA_HASH_TAG="${ALPHA_VERS_TAG}-${{ steps.app-vers.outputs.GIT_HASH }}"
+          
+          ECR_VERS_TAG="${{ env.ecr-repo-url }}:${ALPHA_VERS_TAG}"
+          ECR_HASH_TAG="${{ env.ecr-repo-url }}:${ALPHA_HASH_TAG}"
+
           docker tag ${{ env.APP_DAY1 }}:local ${ECR_VERS_TAG}
           docker tag ${{ env.APP_DAY1 }}:local ${ECR_HASH_TAG}
+
           docker push ${ECR_VERS_TAG}
           docker push ${ECR_HASH_TAG}
+
+      # TODO: AWS SecretManager에서 PAT 불러오기
+      # TODO: 'main' 브랜치에서만 푸시하도록 조건문 제어
+
+      # TODO: application.yml 파일 복사
+      # TODO: 'main' 브랜치에서만 푸시하도록 조건문 제어
+
+      # TODO: release.yml 파일에 이미지 태그 갱신 로직 추가 > X.Y.Z-alpha-HASH
+      # TODO: 'main' 브랜치에서만 푸시하도록 조건문 제어
+
+      # TODO: push-to-another-repository 수행
+      # TODO: 'main' 브랜치에서만 푸시하도록 조건문 제어
