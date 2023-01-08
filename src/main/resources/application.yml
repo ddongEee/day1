@@ -17,12 +17,12 @@ server:
       min-spare: ${SERVER_TRHEAD_MIN:100}
 
 ## ======================================
-## DATASOURCE & JPA & KAFKA
+## DATASOURCE & JPA
 ## * Ref. maximum-pool-size > https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing#connections--core_count--2--effective_spindle_count
 ## ======================================
 spring:
   application:
-    name: day1app
+    name: ${APP_NAME:day1app}
   datasource:
     driver-class-name: "${DB_DRIVER_CLASS_NAME:org.postgresql.Driver}"
     url: "jdbc:${DB_ENGINE:postgresql}://${DB_HOST:localhost}:${DB_PORT:5432},${DB_HOST_READONLY:localhost}:${DB_PORT:5432}/${DB_DATABASE_NAME:day1}?${DB_PRIMARY_OPTS:}"
