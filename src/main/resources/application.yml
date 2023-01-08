@@ -16,16 +16,6 @@ server:
       max: ${SERVER_TRHEAD_MAX:200}
       min-spare: ${SERVER_TRHEAD_MIN:100}
 
-## ===================================
-## TODO: Spring Actuator
-## * Ref. https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.health.auto-configured-health-indicators
-## ===================================
-#management:
-#  health:
-#    defaults.enabled: false
-#    livenessState.enabled: true
-#    readinessState.enabled: true
-
 ## ======================================
 ## DATASOURCE & JPA & KAFKA
 ## * Ref. maximum-pool-size > https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing#connections--core_count--2--effective_spindle_count
@@ -68,7 +58,7 @@ spring:
         use_jdbc_metadata_defaults: true
 
 ## ======================================
-## Actuator
+## Spring Actuator
 ## * Ref. Production-ready Features > https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html
 ## ======================================
 management:
