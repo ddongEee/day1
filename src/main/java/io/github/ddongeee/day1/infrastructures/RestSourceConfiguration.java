@@ -10,8 +10,8 @@ import java.time.Duration;
 
 @Configuration
 public class RestSourceConfiguration {
-    @Value("${microservice.day2.url}")
-    private String day2Url;
+//    @Value("${microservice.day2.url}")
+    private String day2Url = "deprecated";
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder()

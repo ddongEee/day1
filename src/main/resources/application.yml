@@ -82,7 +82,3 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
-
-microservice:
-  day2:
-    url: "http://${DAY2_HOST:localhost}:${DAY2_PORT:8082}"
