@@ -69,6 +69,8 @@ management:
       enabled: false
     db:
       enabled: true
+    livenessState:
+      enabled: true
   endpoints:
     web:
       exposure:
@@ -78,6 +80,8 @@ management:
       show-details: always
       show-components: always
       group:
+        liveness:
+          include: "livenessstate,db"
         readiness:
           show-details: always
           include: "readinessState,db"
